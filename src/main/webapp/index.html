@@ -1,5 +1,4 @@
-<!--
-Copyright 2019 Google Inc.
+<!-- Copyright 2019 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,24 +14,76 @@ limitations under the License.
 -->
 
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+
+<head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>CodeU 2019 Starter Project</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="css/landing-page.css">
+
+    <!-- jQuery CDN Link -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Font Awesome Icons link -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+
+
     <script src="/js/navigation-loader.js"></script>
-  </head>
-  <body onload="addLoginOrLogoutLinkToNavigation();">
-    <nav>
-      <ul id="navigation">
-        <li><a href="/">Home</a></li>
-      </ul>
-    </nav>
-    <h1>CodeU Starter Project</h1>
-    <p>This is the CodeU starter project. Click the links above to login and visit your page.
-    You can post messages on your page, and you can visit other user pages if you have
-    their URL.</p>
-    <p>This is your code now! Feel free to make changes, and don't be afraid to get creative!
-    You could start by modifying this page to tell the world more about your team.</p>
-  </body>
+</head>
+
+<body>
+    <main>
+        <div class="hero">
+            <div class="hero-left hero-item">
+                <h2 class="primary-heading"><i class="fas fa-chalkboard"></i>Form your study groups</h2>
+                <h2 class="primary-heading"><i class="fas fa-school"></i>Ace your next exam</h2>
+                <h2 class="primary-heading"><i class="fas fa-book"></i>Studying is now easier than ever</h2>
+            </div>
+            <div class="hero-right hero-item">
+                <a href="login.html" class="login">Already a member? Sign in here.</a>
+                <div class="form-container">
+                    <h2 class="primary-heading" style="margin-bottom: 0px !important">Register for Study Group Finder
+                        Today <i style="margin-left: 5px;" class="fas fa-registered"></i></h2>
+                    <div style="height: 2px; background-color: white; width: 15%; margin: 25px auto;"></div>
+                    <form id="contact" action="" method="post">
+                        <fieldset>
+                            <input placeholder="First Name" type="text" tabindex="1" required autofocus>
+                        </fieldset>
+                        <fieldset>
+                            <input placeholder="Email" type="email" tabindex="2" required>
+                        </fieldset>
+                        <fieldset>
+                            <input placeholder="Phone Number (optional)" type="tel" tabindex="3" required>
+                        </fieldset>
+                        <fieldset>
+                            <input placeholder="University" type="url" tabindex="4" required>
+                        </fieldset>
+                        <fieldset>
+                            <textarea placeholder="Subject" tabindex="5" required></textarea>
+                        </fieldset>
+                        <fieldset>
+                            <a href="#" class="btn btn--white btn--animated">Sign Up</a>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="home-footer">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Policy</a>
+            <a href="#">Terms & Conditions</a>
+            <a href="#">Login</a>
+        </div>
+    </footer>
+    <div class="copyright">
+        CodeU Team34 | Copyright &copy; 2019 | All Rights Reserved
+    </div>
+
+</body>
+
 </html>

@@ -15,18 +15,35 @@
  */
 
 /* Prevent the page from becoming too wide. */
+
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,700');
+
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
 body {
-  max-width: 600px;
+  font-family: 'Raleway', sans-serif;
 }
 
-/* Remove bullet points from navigation bar. */
-nav ul {
-  list-style-type: none;
-  padding-left: 0;
+.nav {
+  background-color: #39a7d9;
 }
 
-/* Keep navigation menu on one line. */
-nav li {
-  display: inline-block;
-  margin-right: 10px
+.nav-item {
+  text-transform: uppercase;
+  font-size: 16px;
+  padding: 5px 10px;
+}
+
+.nav-item:hover {
+  background-color: #0892d0;
+}
+
+.nav-link, .nav-link:hover {
+  color: white;
 }
