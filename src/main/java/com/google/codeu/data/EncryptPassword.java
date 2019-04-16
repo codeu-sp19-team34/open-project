@@ -1,4 +1,4 @@
-package com.example.appengine.cloudsql;
+package com.google.codeu.data;
 
 import java.math.BigInteger;
 import java.util.Random;
@@ -41,7 +41,7 @@ public class EncryptPassword {
      * @return (p*q)^e to encrypt the password that the user has chosen when creating their account
      */
     public String performEncryption() {
-        encryptedpwd = new BigInteger(stringbytes).modPow(exponent, publickey).toByteArray();
+        encryptedpwd = (new BigInteger(stringbytes)).modPow(exponent, publickey).toByteArray();
         return convertBytesToString(encryptedpwd);
     }
 
@@ -54,7 +54,11 @@ public class EncryptPassword {
      */
     public EncryptPassword(String password, BigInteger n, BigInteger e, BigInteger d){
         this.password = password;
-        this.stringbytes = this.password.getBytes();
+        char[] chars = password.toCharArray();
+        this.stringbytes = new byte[chars.length];
+        for (int i = 0; i < chars.length; i++){
+            stringbytes[i] = (byte)chars[i];
+        }
         this.publickey = n;
         this.exponent = e;
         this.privatekey = d;
@@ -66,10 +70,12 @@ public class EncryptPassword {
      * @return stringbytes^privatekey mod public key (where string bytes is the bytes of the previously encrypted string)
      */
     public String performDecryption() {
-        return convertBytesToString((new BigInteger(stringbytes)).modPow(privatekey, publickey).toByteArray());
+        BigInteger poo = new BigInteger(stringbytes);
+
+        return convertBytesToString(poo.modPow(privatekey, publickey).toByteArray());
     }
 
-    public String convertBytesToString(byte[] data) {
+    public static String convertBytesToString(byte[] data) {
         String bytestring = "";
         for (byte bite: data) {
             char c = (char)bite;
@@ -103,6 +109,17 @@ public class EncryptPassword {
     public BigInteger getExponent() {
         return exponent;
     }
+
+   /** public static void main(String[] args){
+        EncryptPassword p = new EncryptPassword("sebrianne");
+        String string = p.performEncryption();
+        System.out.println("Encryption: "+ string);
+        EncryptPassword q = new EncryptPassword(string, p.getPublickey(), p.getExponent(), p.getPrivatekey());
+        System.out.println("Decryption: "+ q.performDecryption());
+
+        
+
+    }*/
 
 
 
