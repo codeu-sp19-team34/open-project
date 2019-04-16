@@ -1,0 +1,142 @@
+@import "button.css";
+@import "form.css";
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: 'Raleway', sans-serif;
+}
+
+.hero-left::after {
+    content: "CodeU Team34 App";
+    top: 20px;
+    left: 20px;
+    position: absolute;
+    font-size: 16px;
+    color: white;
+    letter-spacing: 2px;
+    height: auto;
+    width: auto;
+}
+
+.hero {
+    width: 100%;
+}
+
+.hero-item {
+    float: left;
+    width: 50%;
+    min-height: 92vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.hero-left {
+    background-color: #056691;
+}
+
+.hero-right {
+    background-color: #0892d0;
+    position: relative;
+}
+
+.login {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    opacity: 0.8;
+    padding-bottom: 3px;
+}
+
+.login:hover {
+    opacity: 1;
+    border-bottom: 1px solid white;
+}
+
+.primary-heading {
+    font-size: 20px;
+    color: white;
+    margin-bottom: 35px;
+    font-weight: 400;
+}
+
+.primary-heading i{
+    font-size: 20px;
+    margin-right: 10px;
+    letter-spacing: 2px;
+}
+
+.home-footer {
+    height: 8vh;
+    background-color: #044968;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-footer a{
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    padding: 10px 15px;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.home-form {
+    width: 80%;
+    height: 80vh;
+    position: relative;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.copyright {
+    text-align: center;
+    width: 100%;
+    padding: 5px 0 15px 0;
+    color: white;
+    font-size: 12px;
+    background-color: #044968;
+}
+
+@media screen and (max-width: 728px) {
+    .hero-item {
+        width: 100%;
+    }
+
+    .hero-left {
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 83%, 0% 100%);
+        clip-path: polygon(0 0, 100% 0, 100% 83%, 0% 100%);
+    }
+
+    body {
+        background-color: #0892d0;
+    }
+
+    .home-footer {
+        flex-direction: column;
+        height: auto;
+        padding: 15px 0;
+    }
+}
