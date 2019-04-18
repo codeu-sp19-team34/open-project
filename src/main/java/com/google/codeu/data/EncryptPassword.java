@@ -132,12 +132,13 @@ public class EncryptPassword {
     }
 
     public static void main(String[] args){
-        EncryptPassword p = new EncryptPassword("blue flamingo is on the 455roof~~");
+        EncryptPassword p = new EncryptPassword("bbbbbbbbbbbbbbbbbbbbbbbbbbb");
         String string = p.performEncryption();
         System.out.println("Encryption: "+ string);
         System.out.println(p.getPublickey());
         System.out.println(p.getExponent());
         System.out.println(p.getPrivatekey());
+        System.out.println(p.getSalt());
         EncryptPassword q = new EncryptPassword(string, p.getPublickey(), p.getExponent(), p.getPrivatekey(), p.getSalt());
         System.out.println("Decryption: "+ q.performDecryption());
 

@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
     } catch (SQLException e) {
       throw new ServletException("Unable to connect to Cloud SQL", e);
     }
-  
+
 
     String path = request.getRequestURI();
     if (path.startsWith("/favicon.ico")) {
@@ -83,6 +83,9 @@ public class LoginServlet extends HttpServlet {
         }
         if (dcry.equals(mpassword)) { //user authentication
           resp.sendRedirect("/user-page.html?user=" + memail);
+        }
+        else {
+          resp.sendRedirect("/login.html");
         }
 
       } else {
