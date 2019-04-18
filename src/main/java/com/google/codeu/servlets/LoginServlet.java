@@ -17,8 +17,7 @@
 
 package com.google.codeu.servlets;
 
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
+
 import com.google.codeu.data.EncryptPassword;
 
 import java.io.IOException;
@@ -41,65 +40,53 @@ public class LoginServlet extends HttpServlet {
   EncryptPassword p;
 
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse resp) throws IOException {
+  public void doPost(HttpServletRequest request, HttpServletResponse resp) throws IOException, ServletException {
 
-    final String selectSql = "SELECT * FROM open_project_db.users";
+    String url = System.getProperty("cloudsql");
+    log("connecting to: " + url);
+    try {
+      conn = DriverManager.getConnection(url);
+    } catch (SQLException e) {
+      throw new ServletException("Unable to connect to Cloud SQL", e);
+    }
+  
 
-    String mfirst = "Testing";
-    String mlast = "";
+    String path = request.getRequestURI();
+    if (path.startsWith("/favicon.ico")) {
+      return; // ignore the request for favicon.ico
+    }
+
+
     String memail = request.getParameter("inputEmail");
-    String muni = "Stanford";
-    String mphone = "6508889999";
     String mpassword = request.getParameter("inputPassword");
-    String find = "SELECT * FROM open_project_db.users WHERE email = \"" + memail +"\";";
+
+    String find = "SELECT * FROM open_project_db.users WHERE email = \"" + memail + "\";";
 
     //PrintWriter out = resp.getWriter();
     //resp.setContentType("text/plain");
 
-    try (ResultSet finder = conn.prepareStatement(find).executeQuery()){
+    try (ResultSet finder = conn.prepareStatement(find).executeQuery()) {
       if (finder.next()) {
         //out.println("that user already exists");
         p = new EncryptPassword(finder.getString("password"), new BigInteger(finder.getString("n")), new BigInteger(finder.getString("e")), new BigInteger(finder.getString("d")), finder.getInt("s"));
 
         //remove salt
         String dcry = p.performDecryption();
-        if (finder.getInt("s") == 0){
+        if (finder.getInt("s") == 0) {
           dcry = dcry.substring(0, dcry.length() - 5);
-        }
-        else if (finder.getInt("s") == 1){
+        } else if (finder.getInt("s") == 1) {
           dcry = dcry.substring(0, dcry.length() - 10);
-        }
-        else if (finder.getInt("s") == 2){
+        } else if (finder.getInt("s") == 2) {
           dcry = dcry.substring(0, dcry.length() - 9);
-        }
-        else if (finder.getInt("s") == 3){
+        } else if (finder.getInt("s") == 3) {
           dcry = dcry.substring(0, dcry.length() - 7);
         }
-        if (dcry.equals(mpassword)){ //user authentication
+        if (dcry.equals(mpassword)) { //user authentication
           resp.sendRedirect("/user-page.html?user=" + memail);
         }
 
-      }
-      else { //create a new user and add the encrypted password and the keys to the database
-        int id = 0;
-        try {
-          id = countUsers();
-        } catch (ServletException e) {
-          e.printStackTrace();
-        }
-        p = new EncryptPassword(mpassword);
-        BigInteger n = p.getPublickey();
-        BigInteger e = p.getExponent();
-        BigInteger d = p.getPrivatekey();
-        int sa = p.getSalt();
-        String s = "INSERT INTO open_project_db.users VALUES (" + id + ", \"" + mfirst + "\", \"" +
-                mlast + "\", \"" + muni + "\", \"" + memail + "\", \"" + mphone + "\"" +
-                ", \"" + p.performEncryption() + "\", \"" + n + "\", \"" + e + "\", \"" + d + "\", " + sa + ")\n";
-
-        PreparedStatement statement = conn.prepareStatement(s);
-        statement.executeUpdate();
-        //out.println("new user has been created");
-        resp.sendRedirect("/user-page.html?user=" + memail);
+      } else {
+        resp.sendRedirect("/login.html");
       }
 
     } catch (SQLException e) {
@@ -122,18 +109,4 @@ public class LoginServlet extends HttpServlet {
     }
     return count;
   }
-
-  @Override
-  public void init() throws ServletException {
-    String url = System.getProperty("cloudsql");
-    log("connecting to: " + url);
-    try {
-      conn = DriverManager.getConnection(url);
-    } catch (SQLException e) {
-      throw new ServletException("Unable to connect to Cloud SQL", e);
-    }
-  }
-
-
-
 }
