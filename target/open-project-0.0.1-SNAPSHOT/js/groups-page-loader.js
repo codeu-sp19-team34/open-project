@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-const urlParams = new URLSearchParams(window.location.search);
-// const parameterUsername = urlParams.get('groups');
-
 /** Fetches groups and adds them to the page. */
 function fetchGroups() {
   let url = '/groups';
@@ -25,35 +22,35 @@ function fetchGroups() {
         return response.json();
       })
       .then((groups) => {
-        const groupContainer = document.getElementById('group-container');
+        const groupsContainer = document.getElementById('groups-container');
         if (groups.length == 0) {
-          groupContainer.innerHTML = '<p>This user has no saved groups yet.</p>';
+          groupsContainer.innerHTML = '<p>This user has no saved groups yet.</p>';
         } else {
-          groupContainer.innerHTML = '';
+          groupsContainer.innerHTML = '';
         }
         groups.forEach((group) => {
-          const groupDiv = buildMessageDiv(group);
-          groupContainer.appendChild(groupDiv);
+          const groupDiv = buildGroupDiv(group);
+          groupsContainer.appendChild(groupDiv);
         })
       });
 }
 
-function buildMessageDiv(group) {
+function buildGroupDiv(group) {
   const headerDiv = document.createElement('div');
   headerDiv.classList.add('group-header');
   headerDiv.appendChild(document.createTextNode(
       group.id +
+      ': ' +
+      group.name +
       ' - ' +
-      new Data(group.name) +
-      ' ['
-      + group.course + ']'));
+      group.course));
 
   const bodyDiv = document.createElement('div');
-  bodyDiv.classList.add('group-body');
+  bodyDiv.classList.add('groups-body');
   bodyDiv.innerHTML = group.name;
 
   const groupDiv = document.createElement('div');
-  groupDiv.classList.add('group-div');
+  groupDiv.classList.add('groups-div');
   groupDiv.appendChild(headerDiv);
   groupDiv.appendChild(bodyDiv);
 

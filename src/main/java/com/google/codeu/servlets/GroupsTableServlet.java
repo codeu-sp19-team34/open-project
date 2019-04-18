@@ -18,6 +18,7 @@ package com.example.appengine.cloudsql;
 
 import com.google.apphosting.api.ApiProxy;
 import com.google.common.base.Stopwatch;
+import com.google.codeu.data.Group;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,12 +27,7 @@ import java.io.PrintWriter;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -45,11 +41,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 // [START gae_java8_mysql_app]
-@SuppressWarnings("serial")
 @WebServlet("/groups")
 public class GroupsTableServlet extends HttpServlet {
 
   Connection conn;
+  Group g;
 
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -59,30 +55,28 @@ public class GroupsTableServlet extends HttpServlet {
     PrintWriter out = resp.getWriter();
     resp.setContentType("text/plain");
 
-    try (ResultSet rs = conn.prepareStatement(query).executeQuery()) {
+    try(ResultSet rs = conn.prepareStatement(query).executeQuery()) {
       out.print("Groups:\n");
       while (rs.next()) {
-        String id = rs.getString("id");
-        String creator_id = rs.getString("creator_id");
+        int id = rs.getInt("id");
+        int creator_id = rs.getInt("creator_id");
         String name = rs.getString("name");
         String course = rs.getString("course");
-        String size = rs.getString("size");
-        String max_size = rs.getString("max_size");
+        int size = rs.getInt("size");
+        int max_size = rs.getInt("max_size");
 
-        out.println(id + ", " + creator_id + ": " + name + ", " + course);
-        out.println(size + ", " + max_size + "\n");
+        g = new Group(id, creator_id, name, course, size, max_size);
 
+        out.println(id + ", " + creator_id + ": " + name + ", " + course + "\t" + size + ", " + max_size + "\n");
       }
     } catch (SQLException e) {
       throw new ServletException("SQL error", e);
-    } finally {
-      if (stmt != null) { stmt.close(); }
     }
   }
 
   @Override
   public void init() throws ServletException {
-    String url = System.getProperty("groups");
+    String url = System.getProperty("cloudsql");
     log("connecting to: " + url);
     try {
       conn = DriverManager.getConnection(url);
@@ -91,4 +85,3 @@ public class GroupsTableServlet extends HttpServlet {
     }
   }
 }
-// [END gae_java8_mysql_app]

@@ -12,7 +12,18 @@
     <div id="content">
       <h1>Available Groups</h1>
       <hr/>
-      <div id="group-container">Loading...</div>
+      <div id="groups-container">Loading...</div>
+      <script>
+          var xmhr = new XMLHttpRequest();
+          xmhr.onreadystatechange = function() {
+              if (xmhr.readyState == 4) {
+                  var data = xmhr.responseText;
+                  alert("Response Data "+data);
+              }
+          }
+          xhr.open('GET', 'GroupsTableServlet', true);
+          xhr.send(null);
+      </script>
     </div>
   </body>
 </html>

@@ -21,4 +21,11 @@
   <threadsafe>false</threadsafe>
   <sessions-enabled>true</sessions-enabled>
   <runtime>java8</runtime>
+
+  <service>cloudsql</service>
+
+  <system-properties>
+    <property name="cloudsql" value="jdbc:mysql://google/open_project_db?useSSL=false&amp;cloudSqlInstance=sp19-codeu-34-9569:us-west1:team34-mysql&amp;socketFactory=com.google.cloud.sql.mysql.SocketFactory&amp;user=root&amp;password=team34cu" />
+  </system-properties>
+
 </appengine-web-app>

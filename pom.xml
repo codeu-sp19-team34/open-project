@@ -28,6 +28,7 @@ limitations under the License.
   <url>http://maven.apache.org</url>
 
   <properties>
+
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,17 +37,18 @@ limitations under the License.
 
   <dependencies>
 
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <version>3.1.0</version>
-      <scope>provided</scope>
-    </dependency>
+      <dependency>
+          <groupId>javax.servlet</groupId>
+          <artifactId>javax.servlet-api</artifactId>
+          <version>3.1.0</version>
+          <type>jar</type>
+          <scope>provided</scope>
+      </dependency>
 
     <dependency>
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-api-1.0-sdk</artifactId>
-      <version>1.9.59</version>
+      <version>1.9.71</version>
     </dependency>
 
     <dependency>
@@ -73,16 +75,66 @@ limitations under the License.
       <version>1.55.0</version>
     </dependency>
 
+      <dependency>
+          <groupId>com.google.api-client</groupId>
+          <artifactId>google-api-client-appengine</artifactId>
+          <version>1.28.0</version>
+      </dependency>
+
+      <!-- [START gae_java8_mysql_dependencies] -->
+      <dependency> <!-- Only used locally -->
+          <groupId>mysql</groupId>
+          <artifactId>mysql-connector-java</artifactId>
+          <version>5.1.42</version>
+      </dependency>
+      <dependency>
+          <groupId>com.google.cloud.sql</groupId>
+          <artifactId>mysql-socket-factory</artifactId>
+          <version>1.0.12</version>
+      </dependency>
+      <!-- [END gae_java8_mysql_dependencies] -->
+
 
   </dependencies>
 
   <build>
+
     <plugins>
       <plugin>
         <groupId>com.google.appengine</groupId>
         <artifactId>appengine-maven-plugin</artifactId>
         <version>1.9.59</version>
       </plugin>
+
+        <!-- [START gae_java8_mysql_plugins] -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>3.0.0</version>
+            <configuration>
+                <webResources>
+                    <!-- in order to interpolate version from pom into appengine-web.xml -->
+                    <resource>
+                        <directory>${basedir}/src/main/webapp/WEB-INF</directory>
+                        <filtering>true</filtering>
+                        <targetPath>WEB-INF</targetPath>
+                    </resource>
+                </webResources>
+            </configuration>
+        </plugin>
+
+        <plugin>
+            <groupId>com.google.cloud.tools</groupId>
+            <artifactId>appengine-maven-plugin</artifactId>
+            <version>1.3.1</version>
+            <configuration>
+                <deploy.promote>true</deploy.promote>
+                <deploy.stopPreviousVersion>true</deploy.stopPreviousVersion>
+            </configuration>
+        </plugin>
+        <!-- [END gae_java8_mysql_plugins] -->
+
+
     </plugins>
   </build>
 </project>
