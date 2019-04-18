@@ -20,6 +20,7 @@ import com.google.apphosting.api.ApiProxy;
 import com.google.common.base.Stopwatch;
 
 import java.io.IOException;
+import java.util.List;
 
 import java.io.PrintWriter;
 import java.net.Inet4Address;
@@ -41,24 +42,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 // [START gae_java8_mysql_app]
 @SuppressWarnings("serial")
-@WebServlet(name = "groups",
-    description = "Groups: Send groups data from CloudSQL open_project_db",
-    urlPatterns = "/groups")
+@WebServlet("/groups")
 public class GroupsTableServlet extends HttpServlet {
+
   Connection conn;
 
   @Override
-  public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException,
-      ServletException {
+  public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 
-    final String selectSql = "SELECT * FROM open_project_db.groups";
+    String query = "SELECT * FROM open_project_db.groups";
 
     PrintWriter out = resp.getWriter();
     resp.setContentType("text/plain");
 
-    try (ResultSet rs = conn.prepareStatement(selectSql).executeQuery()) {
+    try (ResultSet rs = conn.prepareStatement(query).executeQuery()) {
       out.print("Groups:\n");
       while (rs.next()) {
         String id = rs.getString("id");
@@ -74,6 +75,8 @@ public class GroupsTableServlet extends HttpServlet {
       }
     } catch (SQLException e) {
       throw new ServletException("SQL error", e);
+    } finally {
+      if (stmt != null) { stmt.close(); }
     }
   }
 
