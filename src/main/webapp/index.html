@@ -46,21 +46,24 @@ limitations under the License.
                     <h2 class="primary-heading" style="margin-bottom: 0px !important">Register for Study Group Finder
                         Today <i style="margin-left: 5px;" class="fas fa-registered"></i></h2>
                     <div style="height: 2px; background-color: white; width: 15%; margin: 25px auto;"></div>
-                    <form id="contact" action="" method="post">
+                    <form id="contact" action="login" method=post>
                         <fieldset>
-                            <input placeholder="First Name" type="text" tabindex="1" required autofocus>
+                            <input placeholder="First Name" id="mname" type="text" tabindex="1" required autofocus>
                         </fieldset>
                         <fieldset>
-                            <input placeholder="Email" type="email" tabindex="2" required>
+                            <input placeholder="Email" id="inputEmail" type="email" tabindex="2" required>
                         </fieldset>
                         <fieldset>
-                            <input placeholder="Phone Number (optional)" type="tel" tabindex="3" required>
+                            <input placeholder="Phone Number (optional)" id="mphone" type="tel" tabindex="3" required>
                         </fieldset>
                         <fieldset>
-                            <input placeholder="University" type="url" tabindex="4" required>
+                            <input placeholder="University" id="muni" type="url" tabindex="4" required>
                         </fieldset>
                         <fieldset>
-                            <textarea placeholder="Subject" tabindex="5" required></textarea>
+                            <textarea placeholder="Subject" id="msub" tabindex="5" required></textarea>
+                        </fieldset>
+                        <fieldset>
+                            <textarea placeholder="Password" id="inputPassword" tabindex="6" required></textarea>
                         </fieldset>
                         <fieldset>
                             <a href="#" class="btn btn--white btn--animated">Sign Up</a>

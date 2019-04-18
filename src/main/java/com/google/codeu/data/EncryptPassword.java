@@ -132,7 +132,7 @@ public class EncryptPassword {
     }
 
     public static void main(String[] args){
-        EncryptPassword p = new EncryptPassword("codeu");
+        EncryptPassword p = new EncryptPassword("blue flamingo is on the 455roof~~");
         String string = p.performEncryption();
         System.out.println("Encryption: "+ string);
         System.out.println(p.getPublickey());
