@@ -50,10 +50,12 @@ public class GroupsTableServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 
+    System.out.println("IN DOGET FUNCTION");
+
     String query = "SELECT * FROM open_project_db.groups";
 
+    resp.setContentType("text/html");
     PrintWriter out = resp.getWriter();
-    resp.setContentType("text/plain");
 
     try(ResultSet rs = conn.prepareStatement(query).executeQuery()) {
       out.print("Groups:\n");
@@ -67,10 +69,14 @@ public class GroupsTableServlet extends HttpServlet {
 
         g = new Group(id, creator_id, name, course, size, max_size);
 
+        out.println("<p>");
         out.println(id + ", " + creator_id + ": " + name + ", " + course + "\t" + size + ", " + max_size + "\n");
+        out.println("</p>");
       }
     } catch (SQLException e) {
       throw new ServletException("SQL error", e);
+    } finally {
+      out.close();
     }
   }
 

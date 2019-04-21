@@ -14,7 +14,7 @@ limitations under the License.
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Gruper: Groups</title>
+    <title>CodeU Team34 App</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/css/main.css">
@@ -36,10 +36,14 @@ limitations under the License.
   <body onload="buildUI();">
     <div id="content">
       <h1>Available Groups</h1>
-      <hr/>
-      <div class="card-body">
-        Something awesome
-      </div>
+      <table name="groupsList" method="get" action="/groups">
+        <a href="${pageContext.request.contextPath}/groups">Login</a>
+        <tr>
+          <td>${}</td>
+          <td>${}</td>
+          <td>${}</td>
+        </tr>
+      </table>
     </div>
   </body>
 </html>
