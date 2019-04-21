@@ -81,7 +81,7 @@ public class LoginServlet extends HttpServlet {
           dcry = dcry.substring(0, dcry.length() - 7);
         }
         if (dcry.equals(mpassword)) { //user authentication
-          resp.sendRedirect("/user-page.html?user=" + memail);
+          resp.sendRedirect("/find-group.html?user=" + memail);
         }
         else {
           resp.sendRedirect("/login.html");

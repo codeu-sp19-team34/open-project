@@ -20,7 +20,7 @@ limitations under the License.
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>CodeU 2019 Starter Project</title>
+    <title>Study Group Finder</title>
     <link rel="stylesheet" href="/css/main.css">
 
     <!-- jQuery CDN Link -->
@@ -44,24 +44,59 @@ limitations under the License.
         <!-- Bootstrap nav menu template -->
         <ul class="nav justify-content-end" id="navigation">
             <li class="nav-item">
-                <a class="nav-link active" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Messages</a>
+                <a class="nav-link active" href="/find-group.html">Home</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                    aria-expanded="false">Groups</a>
+                   aria-expanded="false">Groups</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Create a Group</a>
-                    <a class="dropdown-item" href="#">Find a Group</a>
+                    <a class="dropdown-item" href="/create-group.html">Create a Group</a>
+                    <a class="dropdown-item" href="/groups.html">Find a Group</a>
                 </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/index.html">Logout</a>
             </li>
         </ul>
     </nav>
     <!-- End of navigation menu component -->
 
-    <button type="button" class="btn btn-primary">Create a Group</button>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card card-signin my-5">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">New Group</h5>
+                        <form class="form-signin" action="login" method=post>
+                            <div class="form-label-group">
+                                <input id="course" name="course"class="form-control" placeholder="Course Name"
+                                       required autofocus>
+                            </div>
+
+                            <div class="form-label-group">
+                                <input id="school" name="school" class="form-control" placeholder="College or University"
+                                       required>
+                            </div>
+
+                            <div class="form-label-group">
+                                <input id="professor" name="professor" class="form-control" placeholder="Professor"
+                                       required>
+                            </div>
+
+                            <div class="form-label-group">
+                                <input type="number" id="number" name="number" class="form-control" placeholder="Group Size" min="3" max="20"
+                                       required>
+                            </div>
+
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Create My Group!</button>
+                            <hr class="my-4">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 
