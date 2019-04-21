@@ -138,7 +138,6 @@ function buildLanguageLinks(){
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
   setPageTitle();
-  buildLanguageLinks();
   //ClassicEditor.create( document.getElementById('message-input') );
   const config = {removePlugins: [ 'ImageUpload' ]};
   ClassicEditor.create(document.getElementById('message-input'), config );
