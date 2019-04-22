@@ -10,7 +10,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:javax.servlet-api:3.1.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.appengine:appengine-api-1.0-sdk:1.9.59" level="project" />
+    <orderEntry type="library" name="Maven: com.google.appengine:appengine-api-1.0-sdk:1.9.71" level="project" />
     <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.8.3" level="project" />
     <orderEntry type="library" name="Maven: com.google.cloud:google-cloud-datastore:1.52.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.cloud:google-cloud-core:1.52.0" level="project" />
@@ -33,8 +33,6 @@
     <orderEntry type="library" name="Maven: com.google.auth:google-auth-library-credentials:0.11.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.auth:google-auth-library-oauth2-http:0.11.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.oauth-client:google-oauth-client:1.24.1" level="project" />
-    <orderEntry type="library" name="Maven: com.google.api-client:google-api-client:1.24.1" level="project" />
-    <orderEntry type="library" name="Maven: com.google.http-client:google-http-client-appengine:1.24.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.http-client:google-http-client-jackson2:1.24.1" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.2" level="project" />
     <orderEntry type="library" name="Maven: com.google.api:gax-httpjson:0.51.0" level="project" />
@@ -64,5 +62,34 @@
     <orderEntry type="library" name="Maven: io.opencensus:opencensus-contrib-grpc-metrics:0.12.3" level="project" />
     <orderEntry type="library" name="Maven: io.grpc:grpc-stub:1.16.1" level="project" />
     <orderEntry type="library" name="Maven: io.grpc:grpc-auth:1.16.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.api-client:google-api-client-appengine:1.28.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.oauth-client:google-oauth-client-appengine:1.28.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.oauth-client:google-oauth-client-servlet:1.28.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.http-client:google-http-client-jdo:1.28.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.api-client:google-api-client:1.28.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.http-client:google-http-client-apache:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.api-client:google-api-client-servlet:1.28.0" level="project" />
+    <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
+    <orderEntry type="library" name="Maven: javax.jdo:jdo2-api:2.3-eb" level="project" />
+    <orderEntry type="library" name="Maven: javax.transaction:transaction-api:1.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.http-client:google-http-client-appengine:1.28.0" level="project" />
+    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.42" level="project" />
+    <orderEntry type="library" name="Maven: com.google.cloud.sql:mysql-socket-factory:1.0.12" level="project" />
+    <orderEntry type="library" name="Maven: com.google.cloud.sql:jdbc-socket-factory-core:1.0.12" level="project" />
+    <orderEntry type="library" name="Maven: com.google.apis:google-api-services-sqladmin:v1beta4-rev56-1.23.0" level="project" />
+    <orderEntry type="library" name="Maven: com.github.jnr:jnr-unixsocket:0.21" level="project" />
+    <orderEntry type="library" name="Maven: com.github.jnr:jnr-ffi:2.1.9" level="project" />
+    <orderEntry type="library" name="Maven: com.github.jnr:jffi:1.2.17" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.github.jnr:jffi:native:1.2.16" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm-commons:5.0.3" level="project" />
+    <orderEntry type="library" name="Maven: com.github.jnr:jnr-a64asm:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.github.jnr:jnr-x86asm:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.github.jnr:jnr-constants:0.9.11" level="project" />
+    <orderEntry type="library" name="Maven: com.github.jnr:jnr-enxio:0.19" level="project" />
+    <orderEntry type="library" name="Maven: com.github.jnr:jnr-posix:3.0.47" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm-util:7.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm:7.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm-tree:7.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm-analysis:7.0" level="project" />
   </component>
 </module>

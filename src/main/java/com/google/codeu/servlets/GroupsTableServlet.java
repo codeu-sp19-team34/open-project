@@ -16,21 +16,15 @@
 
 package com.example.appengine.cloudsql;
 
-import com.google.apphosting.api.ApiProxy;
-import com.google.common.base.Stopwatch;
 import com.google.codeu.data.Group;
 
 import java.io.IOException;
-import java.util.List;
-
-import java.io.PrintWriter;
-import java.net.Inet4Address;
-import java.net.Inet6Address;
-import java.net.InetAddress;
-import java.sql.*;
-import java.util.Date;
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import java.io.PrintWriter;
+import java.sql.*;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,9 +34,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-// [START gae_java8_mysql_app]
-@WebServlet("/groups")
+@SuppressWarnings("serial")
+@WebServlet(name="GroupsTableServlet", value="/groups")
 public class GroupsTableServlet extends HttpServlet {
+
+  // Preformatted HTML
+  String headers = "<!DOCTYPE html><meta charset=\"utf-8\"><h1>Welcome to the Study Groups Page</h1><h3><a href=\"groups\">Add a new group</a></h3>";
+  String blogPostDisplayFormat = "<h2> %s </h2> Created at: %s by %s [<a href=\"/update?id=%s\">update</a>] | [<a href=\"/delete?id=%s\">delete</a>]<br><br> %s <br><br>";
 
   Connection conn;
   Group g;
@@ -50,15 +48,15 @@ public class GroupsTableServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 
-    System.out.println("IN DOGET FUNCTION");
+    final String query = "SELECT * FROM open_project_db.groups";
 
-    String query = "SELECT * FROM open_project_db.groups";
-
-    resp.setContentType("text/html");
     PrintWriter out = resp.getWriter();
 
-    try(ResultSet rs = conn.prepareStatement(query).executeQuery()) {
-      out.print("Groups:\n");
+    out.println(headers); // Print HTML headers
+
+    try (ResultSet rs = conn.prepareStatement(query).executeQuery()) {
+      Map<Integer, Group> groups = new HashMap<>();
+
       while (rs.next()) {
         int id = rs.getInt("id");
         int creator_id = rs.getInt("creator_id");
@@ -69,14 +67,25 @@ public class GroupsTableServlet extends HttpServlet {
 
         g = new Group(id, creator_id, name, course, size, max_size);
 
-        out.println("<p>");
-        out.println(id + ", " + creator_id + ": " + name + ", " + course + "\t" + size + ", " + max_size + "\n");
-        out.println("</p>");
+        groups.put(id, g);
       }
+
+      out.println("<table>");
+      groups.forEach(
+              (k, v) -> {
+                // Encode the ID into a websafe string
+                String encodeID = Base64.getUrlEncoder().encodeToString(String.valueOf(k).getBytes());
+
+
+                // Build up string with values from Cloud SQL
+
+                String recordOutput =
+                        String.format("<tr><td>%s</td><td>%s</td><td>%d</td><td>%d</td></tr>", v.getGroupName(), v.getGroupCourse(), v.getGroupSize(), v.getGroupMaxSize());
+                out.println(recordOutput);
+              });
+      out.println("</table>");
     } catch (SQLException e) {
       throw new ServletException("SQL error", e);
-    } finally {
-      out.close();
     }
   }
 
