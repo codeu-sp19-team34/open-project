@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.apphosting.api.ApiProxy;
 
 @SuppressWarnings("serial")
 @WebServlet(name="GroupsTableServlet", value="/groups")
@@ -42,7 +43,7 @@ public class GroupsTableServlet extends HttpServlet {
   String headers = "<!DOCTYPE html><meta charset=\"utf-8\"><h1>Welcome to the Study Groups Page</h1><h3><a href=\"groups\">Add a new group</a></h3>";
   String blogPostDisplayFormat = "<h2> %s </h2> Created at: %s by %s [<a href=\"/update?id=%s\">update</a>] | [<a href=\"/delete?id=%s\">delete</a>]<br><br> %s <br><br>";
 
-  Connection conn;
+  Connection conn = null;
   Group g;
 
   @Override
@@ -91,7 +92,11 @@ public class GroupsTableServlet extends HttpServlet {
 
   @Override
   public void init() throws ServletException {
-    String url = System.getProperty("cloudsql");
+    ApiProxy.Environment env = ApiProxy.getCurrentEnvironment();
+    Map<String, Object> attr = env.getAttributes();
+    String hostname = (String) attr.get("com.google.appengine.runtime.default_version_hostname");
+    String url = hostname.contains("localhost:")
+            ? System.getProperty("cloudsql-local") : System.getProperty("cloudsql");
     log("connecting to: " + url);
     try {
       conn = DriverManager.getConnection(url);
