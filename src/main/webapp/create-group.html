@@ -68,7 +68,13 @@ limitations under the License.
                 <div class="card card-signin my-5">
                     <div class="card-body">
                         <h5 class="card-title text-center">New Group</h5>
-                        <form class="form-signin" action="login" method=post>
+                        <form class="form-signin" action="\newgroup" method=post>
+
+                            <div class="form-label-group">
+                                <input id="name" name="name"class="form-control" placeholder="Group Name"
+                                       required autofocus>
+                            </div>
+
                             <div class="form-label-group">
                                 <input id="course" name="course"class="form-control" placeholder="Course Name"
                                        required autofocus>
@@ -89,8 +95,19 @@ limitations under the License.
                                        required>
                             </div>
 
+                            <div class="form-label-group">
+                                <input type="number" id="max" name="max" class="form-control" placeholder="Max Size" min="3" max="20"
+                                       required>
+                            </div>
+
+                            <div class="form-label-group">
+                                <input id="subjects" name="subjects" class="form-control" placeholder="Subjects Related"
+                                       required>
+                            </div>
+
                             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Create My Group!</button>
                             <hr class="my-4">
+
                         </form>
                     </div>
                 </div>

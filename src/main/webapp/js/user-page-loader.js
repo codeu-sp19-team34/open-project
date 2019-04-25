@@ -16,35 +16,31 @@
 
 // Get ?user=XYZ parameter value
 const urlParams = new URLSearchParams(window.location.search);
-const parameterUsername = urlParams.get('user');
+const parameterGroupname = urlParams.get('group');
 
-// URL must include ?user=XYZ parameter. If not, redirect to homepage.
-if (!parameterUsername) {
-  window.location.replace('/');
-}
 
 /** Sets the page title based on the URL parameter username. */
 function setPageTitle() {
   document.getElementById('page-title').innerText = parameterUsername;
-  document.title = parameterUsername + ' - User Page';
+  document.title = parameterUsername + ' - Group Chat';
 }
 
 /**
  * Shows the message form if the user is logged in and viewing a user page
  */
 function showMessageForm() {
-  fetch('/login-status')
-      .then((response) => {
-        return response.json();
-      })
-      .then((loginStatus) => {
-        if (loginStatus.isLoggedIn) {
+  //fetch('/login-status')
+    //  .then((response) => {
+      //  return response.json();
+      //})
+      //.then((loginStatus) => {
+       // if (loginStatus.isLoggedIn) {
           const messageForm = document.getElementById('message-form');
-          messageForm.action = '/messages?recipient=' + parameterUsername;
+          messageForm.action = '/messages?recipient=' + parameterGroupname;
           messageForm.classList.remove('hidden');
-        }
+        //}
       });
-  document.getElementById('about-me-form').classList.remove('hidden');
+ // document.getElementById('about-me-form').classList.remove('hidden');
 }
 
 /** Fetches messages and add them to the page. */
@@ -52,20 +48,20 @@ function fetchMessages() {
   // const url = '/messages?user=' + parameterUsername;
 
   // for translation: if a target language is specified, we append it to url
-  const parameterLanguage = urlParams.get('language');
-  let url = '/messages?user=' + parameterUsername;
-  if(parameterLanguage) {
-    url += '&language=' + parameterLanguage;
-  }
+  //const parameterLanguage = urlParams.get('language');
+  let url = '/messages?group=' + parameterGroupname;
+  //if(parameterLanguage) {
+    //url += '&language=' + parameterLanguage;
+  //}
 
-  fetch(url)
-      .then((response) => {
-        return response.json();
-      })
+ // fetch(url)
+   //   .then((response) => {
+     //   return response.json();
+      //})
       .then((messages) => {
         const messagesContainer = document.getElementById('message-container');
         if (messages.length == 0) {
-          messagesContainer.innerHTML = '<p>This user has no posts yet.</p>';
+          messagesContainer.innerHTML = '<p>This group has no posts yet.</p>';
         } else {
           messagesContainer.innerHTML = '';
         }
@@ -87,9 +83,7 @@ function buildMessageDiv(message) {
   headerDiv.appendChild(document.createTextNode(
       message.user +
       ' - ' +
-      new Date(message.timestamp) +
-      ' ['
-      + message.score + ']'));
+      new Date(message.timestamp)));
 
   const bodyDiv = document.createElement('div');
   bodyDiv.classList.add('message-body');
@@ -104,6 +98,7 @@ function buildMessageDiv(message) {
 }
 
 /** uses the fetch function to request the user's about data, and then adds it to the page. */
+/**
 function fetchAboutMe(){
   const url = '/about?user=' + parameterUsername;
   fetch(url).then((response) => {
@@ -117,10 +112,10 @@ function fetchAboutMe(){
     aboutMeContainer.innerHTML = aboutMe;
 
   });
-}
+}*/
 
 // for translation
-function buildLanguageLinks(){
+/**function buildLanguageLinks(){
   const userPageUrl = '/user-page.html?user=' + parameterUsername;
   const languagesListElement  = document.getElementById('languages');
   languagesListElement.appendChild(createListItem(createLink(
@@ -133,10 +128,10 @@ function buildLanguageLinks(){
       userPageUrl + '&language=es', 'Spanish')));
   languagesListElement.appendChild(createListItem(createLink(
       userPageUrl + '&language=ar', 'Arabic')));
-}
+}*/
 
 /** Fetches data and populates the UI of the page. */
-function buildUI() {
+function buildUserUI() {
   setPageTitle();
   //ClassicEditor.create( document.getElementById('message-input') );
   const config = {removePlugins: [ 'ImageUpload' ]};
