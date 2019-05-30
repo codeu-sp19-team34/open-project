@@ -14,6 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="javax.servlet.ServletException"%>
+<%@page import="javax.servlet.annotation.WebServlet"%>
+<%@page import="javax.servlet.http.HttpServlet"%>
+<%@page import="javax.servlet.http.HttpServletRequest"%>
+<%@page import="javax.servlet.http.HttpServletResponse"%>
+<%@page import="java.io.IOException"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.SQLException"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +50,7 @@ limitations under the License.
     <script src="/js/navigation-loader.js"></script>
 </head>
 
-<body onload="addLoginOrLogoutLinkToNavigation();">
+<body onload="buildUI();">
     <!-- Navigation menu component -->
     <nav>
         <!-- Bootstrap nav menu template -->
@@ -61,7 +73,57 @@ limitations under the License.
     </nav>
     <!-- End of navigation menu component -->
 
-    
+    <%
+        Connection conn;
+
+        String url = System.getProperty("cloudsql");
+                log("\n \n \n \n group paggggggggeeee ");
+                try {
+                    conn = DriverManager.getConnection(url);
+                } catch (SQLException e) {
+                    throw new ServletException("Unable to connect to Cloud SQL", e);
+                }
+
+                String groupid = request.getParameter("id");
+
+
+                String query = "SELECT * FROM open_project_db.groups WHERE id = \"" + groupid + "\"\n";
+                String groupformalname = "";
+                String groupcourse = "";
+                int groupsize = 0;
+                int groupmaxsize = 0;
+                String groupsubjects = "";
+                String groupprofessor = "";
+                String groupschool = "";
+                String userid = request.getParameter("userid");
+
+
+                try(ResultSet rs = conn.prepareStatement(query).executeQuery()) {
+
+                    while (rs.next()) {
+                        groupformalname = rs.getString("name");
+                        groupcourse = rs.getString("course");
+                        groupsize = rs.getInt("size");
+                        groupmaxsize = rs.getInt("max_size");
+                        groupsubjects = rs.getString("subjects");
+                        groupprofessor = rs.getString("professor");
+                        groupschool = rs.getString("school");
+                    }
+
+                } catch (SQLException e) {
+                    throw new ServletException("SQL error", e);
+
+                }
+
+
+    %>
+
+    <h1 align = "center"> <%=groupformalname%></h1>
+    <h3 align = "center"> <%=groupsize%> Members </h3>
+    <h3 align = "center"> <%=userid%> TESTINNNNGGG </h3>
+
+
+
 
 </body>
 </html>

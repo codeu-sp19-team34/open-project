@@ -56,18 +56,12 @@ public class AboutMeServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
-        UserService userService = UserServiceFactory.getUserService();
-        if (!userService.isUserLoggedIn()) {
-            response.sendRedirect("/index.html");
-            return;
-        }
+        //String userEmail = userService.getCurrentUser().getEmail();
+        //String aboutMe = Jsoup.clean(request.getParameter("about-me"), Whitelist.none());
 
-        String userEmail = userService.getCurrentUser().getEmail();
-        String aboutMe = Jsoup.clean(request.getParameter("about-me"), Whitelist.none());
+        //User user = new User(userEmail, aboutMe);
+       // datastore.storeUser(user);
 
-        User user = new User(userEmail, aboutMe);
-        datastore.storeUser(user);
-
-        response.sendRedirect("/user-page.html?user=" + userEmail);
+        //response.sendRedirect("/user-page.html?user=" + userEmail);
     }
 }

@@ -13,14 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.TreeMap"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>CodeU 2019 Starter Project</title>
+    <title>Study Group Finder</title>
     <link rel="stylesheet" href="/css/main.css">
 
     <!-- jQuery CDN Link -->
@@ -43,25 +44,63 @@ limitations under the License.
     <nav>
         <!-- Bootstrap nav menu template -->
         <ul class="nav justify-content-end" id="navigation">
-            <li class="nav-item">
-                <a class="nav-link active" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Messages</a>
-            </li>
+            <!-- <li class="nav-item">
+                            <a class="nav-link active" href="/welcome.jsp">Home</a>
+                        </li>-->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                    aria-expanded="false">Groups</a>
+                   aria-expanded="false">Groups</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Create a Group</a>
-                    <a class="dropdown-item" href="#">Find a Group</a>
+                    <a class="dropdown-item" href="/create-group.html">Create a Group</a>
+                    <a class="dropdown-item" href="/groups.html">Find a Group</a>
                 </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/index.html">Logout</a>
+            </li>
+
         </ul>
     </nav>
     <!-- End of navigation menu component -->
 
-    <button type="button" class="btn btn-primary">Find a Group</button>
+    <div class="form-container">
+            <h2 class="primary-heading" style="margin-bottom: 0px !important" align="center"> Your Groups </h2>
+            <div style="height: 2px; background-color: white; width: 15%; margin: 25px auto;"></div>
+
+            <form align = center>
+                <%
+
+                String userid = (String)request.getAttribute("usersid");
+
+                TreeMap<String, Integer> results = (TreeMap<String, Integer>) request.getAttribute("findresults");
+
+                if (results.size() == 0) {
+                %>
+                    <h1 class="primary-heading" style="margin-bottom: 0px !important" align="center"> Sorry, we could not find any groups that match. </h1>
+                <%
+                }
+
+                else {
+
+                   for (String key: results.keySet()) {
+
+                     String id = Integer.toString(results.get(key));
+
+                     String link = key.replaceAll("\\s","");
+
+                %>
+                    <a href="/grouppage.jsp?group=<%=link%>&id=<%=id%>&userid=<%=userid%>"> <button type="button" class="btn btn-primary" style="height:200px;width:200px"> <%=key%> <br> </button> </a>
+                    &nbsp
+                <%
+                    }
+
+                 }
+
+                %>
+
+        </div>
+
+
 
 </body>
 

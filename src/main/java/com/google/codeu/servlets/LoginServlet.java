@@ -42,18 +42,17 @@ public class LoginServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse resp) throws IOException, ServletException {
 
+    String path = request.getRequestURI();
+    if (path.startsWith("/favicon.ico")) {
+      return; // ignore the request for favicon.ico
+    }
+
     String url = System.getProperty("cloudsql");
     log("connecting to: " + url);
     try {
       conn = DriverManager.getConnection(url);
     } catch (SQLException e) {
       throw new ServletException("Unable to connect to Cloud SQL", e);
-    }
-
-
-    String path = request.getRequestURI();
-    if (path.startsWith("/favicon.ico")) {
-      return; // ignore the request for favicon.ico
     }
 
 
@@ -82,7 +81,8 @@ public class LoginServlet extends HttpServlet {
           dcry = dcry.substring(0, dcry.length() - 7);
         }
         if (dcry.equals(mpassword)) { //user authentication
-          resp.sendRedirect("/user-page.html?user=" + memail);
+          resp.sendRedirect("/find-group.jsp?user=" + memail);
+
         }
         else {
           resp.sendRedirect("/login.html");
