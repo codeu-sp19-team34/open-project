@@ -13,7 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.TreeMap"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,9 +44,9 @@ limitations under the License.
     <nav>
         <!-- Bootstrap nav menu template -->
         <ul class="nav justify-content-end" id="navigation">
-            <li class="nav-item">
-                <a class="nav-link active" href="/find-group.html">Home</a>
-            </li>
+            <!-- <li class="nav-item">
+                            <a class="nav-link active" href="/welcome.jsp">Home</a>
+                        </li>-->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                    aria-expanded="false">Groups</a>
@@ -61,34 +62,45 @@ limitations under the License.
         </ul>
     </nav>
     <!-- End of navigation menu component -->
-    <h1 align="center"> Welcome! </h1>
-
-
-
 
     <div class="form-container">
-        <h2 class="primary-heading" style="margin-bottom: 0px !important" align="center"> Your Groups </h2>
-        <div style="height: 2px; background-color: white; width: 15%; margin: 25px auto;"></div>
+            <h2 class="primary-heading" style="margin-bottom: 0px !important" align="center"> Your Groups </h2>
+            <div style="height: 2px; background-color: white; width: 15%; margin: 25px auto;"></div>
 
-        <form id="displaymygroups" action="/groupsprint" method = post target = _self>
-            <%
-            String thegroups[] = request.getParameterValues("groups");
-            if (thegroups != null) {
-                for (String g: thegroups) {
-            %>
-                <button type="button" class="btn btn-primary"> g </button>
+            <form align = center>
+                <%
 
-            <%
+                String userid = (String)request.getAttribute("usersid");
+
+                TreeMap<String, Integer> results = (TreeMap<String, Integer>) request.getAttribute("findresults");
+
+                if (results.size() == 0) {
+                %>
+                    <h1 class="primary-heading" style="margin-bottom: 0px !important" align="center"> Sorry, we could not find any groups that match. </h1>
+                <%
                 }
-            }
-            else {
-            %>
-                 <h3> You do not currently belong to any groups </h3>
-            <%
-            }
-            %>
-        </form>
-    </div>
+
+                else {
+
+                   for (String key: results.keySet()) {
+
+                     String id = Integer.toString(results.get(key));
+
+                     String link = key.replaceAll("\\s","");
+
+                %>
+                    <a href="/grouppage.jsp?group=<%=link%>&id=<%=id%>&userid=<%=userid%>"> <button type="button" class="btn btn-primary" style="height:200px;width:200px"> <%=key%> <br> </button> </a>
+                    &nbsp
+                <%
+                    }
+
+                 }
+
+                %>
+
+        </div>
+
+
 
 </body>
 
