@@ -85,7 +85,11 @@ limitations under the License.
                 }
 
                 String groupid = request.getParameter("id");
+                String thegroup = request.getParameter("group");
 
+                //trying
+                request.setAttribute("groupid", groupid);
+                request.setAttribute("thegroup", thegroup);
 
                 String query = "SELECT * FROM open_project_db.groups WHERE id = \"" + groupid + "\"\n";
                 String groupformalname = "";
@@ -97,6 +101,7 @@ limitations under the License.
                 String groupschool = "";
                 String userid = request.getParameter("userid");
 
+                request.setAttribute("userid", userid);
 
                 try(ResultSet rs = conn.prepareStatement(query).executeQuery()) {
 
@@ -115,12 +120,52 @@ limitations under the License.
 
                 }
 
+            //checking to see if the user already belongs to the group
+         String ingroupalready = "SELECT * FROM open_project_db.group_users WHERE group_id = \"" + groupid + "\" AND user_id = \"" + userid + "\"\n";
+
+         try(ResultSet rs = conn.prepareStatement(ingroupalready).executeQuery()) {
+
+              if (!rs.next()) { //locked, the user needs to request access
+
+          %>
+               <h1 align = "center"> <%=groupformalname%></h1>
+               <h3 align = "center"> <%=groupsize%> Members </h3>
+
+               <form class="joining" action="/joingroup" method=post target = "_self">
+
+                    <input type="hidden" id="userid" name="userid" value="<%=userid%>" >
+                    <input type="hidden" id="id" name="id" value="<%=groupid%>" >
+                    <input type="hidden" id="group" name="group" value="<%=thegroup%>" >
+
+                   <div style="text-align:center">
+                         <button type="submit" class="btn btn-primary" style="height:100px;width:200px"> Join Group </button>
+                   </div>
+
+               </form>
+
+          <%
+              }
+              else { //the user already belongs to this
+          %>
+
+            <h1 align = "center"> <%=groupformalname%></h1>
+            <h3 align = "center"> <%=groupsize%> Members </h3>
+
+          <%
+
+
+
+              }
+
+           } catch (SQLException e) {
+               throw new ServletException("SQL error", e);
+
+           }
+
 
     %>
 
-    <h1 align = "center"> <%=groupformalname%></h1>
-    <h3 align = "center"> <%=groupsize%> Members </h3>
-    <h3 align = "center"> <%=userid%> TESTINNNNGGG </h3>
+
 
 
 

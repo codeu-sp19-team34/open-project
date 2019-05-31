@@ -21,9 +21,9 @@ package com.google.codeu.servlets;
 import com.google.codeu.data.EncryptPassword;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.sql.*;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
   EncryptPassword p;
 
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse resp) throws IOException, ServletException {
+  public void doGet(HttpServletRequest request, HttpServletResponse resp) throws IOException, ServletException {
 
     String path = request.getRequestURI();
     if (path.startsWith("/favicon.ico")) {
@@ -81,7 +81,21 @@ public class LoginServlet extends HttpServlet {
           dcry = dcry.substring(0, dcry.length() - 7);
         }
         if (dcry.equals(mpassword)) { //user authentication
-          resp.sendRedirect("/find-group.jsp?user=" + memail);
+
+          //get the name and save as an attribute
+         // String usersname = finder.getString("first_name");
+          int idnumber = finder.getInt("id");
+          //request.setAttribute("usersname", usersname);
+         // request.setAttribute("idnumber", Integer.toString(idnumber));
+
+
+          //as of may 27th: going to try adding the name as an attibute for the request
+          //then when it redirects to the jsp page, we should be able to see "welcome, ____" (whatever their name is)
+
+
+          //request.getRequestDispatcher("/welcome.jsp?user=" + idnumber).forward(request,resp);
+         resp.sendRedirect("/welcome.jsp?userid=" + idnumber);
+
 
         }
         else {
@@ -95,6 +109,12 @@ public class LoginServlet extends HttpServlet {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse resp) throws IOException, ServletException {
+    doGet(request, resp);
 
   }
 
