@@ -47,9 +47,9 @@ public class CreateNewUserServlet extends HttpServlet {
 
     final String selectSql = "SELECT * FROM open_project_db.users";
 
-    String mfirst = request.getParameter("mname");
-    String mlast = "";
-    String mphone = "";
+    String mfirst = request.getParameter("mfname");
+    String mlast = request.getParameter("mlname");
+    String mphone = request.getParameter("mphone");
     String muni = request.getParameter("muni");
     String memail = request.getParameter("inputEmail");
     String mpassword = request.getParameter("inputPassword");
@@ -83,7 +83,8 @@ public class CreateNewUserServlet extends HttpServlet {
         PreparedStatement statement = conn.prepareStatement(s);
         statement.executeUpdate();
         //out.println("new user has been created");
-        resp.sendRedirect("/user-page.html?user=" + memail);
+        //resp.sendRedirect("/user-page.html?user=" + memail);
+        resp.sendRedirect("/welcome.jsp?userid=" + id);
       }
 
     } catch (SQLException e) {
