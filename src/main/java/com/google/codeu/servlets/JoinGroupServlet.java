@@ -35,7 +35,7 @@ public class JoinGroupServlet extends HttpServlet {
     Connection conn;
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         String url = System.getProperty("cloudsql");
         log("connecting to: " + url);
@@ -85,7 +85,7 @@ public class JoinGroupServlet extends HttpServlet {
         }
 
 
-        response.sendRedirect("/grouppage.jsp?group="+ group +"&id="+ groupid +"&userid=" + userid);
+        //response.sendRedirect("/grouppage.jsp?group="+ group +"&id="+ groupid +"&userid=" + userid);
 
 
     }

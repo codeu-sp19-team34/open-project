@@ -163,8 +163,7 @@ limitations under the License.
 
                     String link = thegroups.get(i).replaceAll("\\s","");
                 %>
-
-                   <a href="/groupchat.html?group=<%=link%>&userid=<%=userid%>"> <button type="button" class="btn btn-primary" style="height:200px;width:200px"> <%=thegroups.get(i)%> </button> </a>
+                   <a href="/grouppage.jsp?group=<%=link%>&id=<%=groupids.get(i)%>&userid=<%=userid%>"> <button type="button" class="btn btn-primary" style="height:200px;width:200px"> <%=thegroups.get(i)%> </button> </a>
 
                     &nbsp
                 <%
