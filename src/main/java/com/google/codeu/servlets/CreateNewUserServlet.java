@@ -71,6 +71,7 @@ public class CreateNewUserServlet extends HttpServlet {
         } catch (ServletException e) {
           e.printStackTrace();
         }
+
         p = new EncryptPassword(mpassword);
         BigInteger n = p.getPublickey();
         BigInteger e = p.getExponent();
@@ -91,6 +92,7 @@ public class CreateNewUserServlet extends HttpServlet {
       e.printStackTrace();
     }
 
+
   }
 
   private int countUsers() throws ServletException {
@@ -99,9 +101,13 @@ public class CreateNewUserServlet extends HttpServlet {
     int count = 0;
     try (ResultSet rs = conn.prepareStatement(selectSql).executeQuery()) {
 
-      while (rs.next()) {
-        count++;
+      if (rs.next()){
+        rs.last();
+        count = rs.getInt("id") + 1;
       }
+     /** while (rs.next()) {
+        count++;
+      }*/
     } catch (SQLException e) {
       throw new ServletException("SQL error -- couldnt count", e);
     }
@@ -122,3 +128,5 @@ public class CreateNewUserServlet extends HttpServlet {
 
 
 }
+
+

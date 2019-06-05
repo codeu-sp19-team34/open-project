@@ -14,13 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
+
+<%@page import="java.util.ArrayList"%>
+<%@page import="javax.servlet.ServletException"%>
+<%@page import="javax.servlet.annotation.WebServlet"%>
+<%@page import="javax.servlet.http.HttpServlet"%>
+<%@page import="javax.servlet.http.HttpServletRequest"%>
+<%@page import="javax.servlet.http.HttpServletResponse"%>
+<%@page import="java.io.IOException"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.SQLException"%>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Study Group Finder</title>
+    <title> Create Group | StudyU: Group Finder</title>
     <link rel="stylesheet" href="/css/main.css">
 
     <!-- jQuery CDN Link -->
@@ -38,20 +52,22 @@ limitations under the License.
     <script src="/js/navigation-loader.js"></script>
 </head>
 
+<% String userid = request.getParameter("userid"); %>
+
 <body onload="addLoginOrLogoutLinkToNavigation();">
     <!-- Navigation menu component -->
     <nav>
         <!-- Bootstrap nav menu template -->
         <ul class="nav justify-content-end" id="navigation">
            <!-- <li class="nav-item">
-                <a class="nav-link active" href="/welcome.jsp">Home</a>
+                <a class="nav-link active" href="/welcome.jsp?userid=<%=userid%>">Home</a>
             </li>-->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                    aria-expanded="false">Groups</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/create-group.html">Create a Group</a>
-                    <a class="dropdown-item" href="/groups.html">Find a Group</a>
+                    <a class="dropdown-item" href="/create-group.jsp?userid=<%=userid%>">Create a Group</a>
+                    <a class="dropdown-item" href="/groups.jsp?userid=<%=userid%>">Find a Group</a>
                 </div>
             </li>
             <li class="nav-item">
@@ -68,42 +84,62 @@ limitations under the License.
                 <div class="card card-signin my-5">
                     <div class="card-body">
                         <h5 class="card-title text-center">New Group</h5>
-                        <form class="form-signin" action="\newgroup" method=post>
+                        <form class="form-signin" action="/newgroup" method=post>
 
                             <div class="form-label-group">
-                                <input id="name" name="name"class="form-control" placeholder="Group Name"
+                                <input id="name" name="name"class="form-control" placeholder="Group Name" autocomplete="off"
                                        required autofocus>
                             </div>
 
                             <div class="form-label-group">
-                                <input id="course" name="course"class="form-control" placeholder="Course Name"
+                                <input id="course" name="course"class="form-control" placeholder="Course Name" autocomplete = "off"
                                        required autofocus>
                             </div>
 
+                            <!-- university as a hidden parameter-->
+
+                            <%
+
+                             Connection conn;
+
+                                String url = System.getProperty("cloudsql");
+                                        log("connecting to: " + url);
+                                        try {
+                                            conn = DriverManager.getConnection(url);
+                                        } catch (SQLException e) {
+                                            throw new ServletException("Unable to connect to Cloud SQL", e);
+                                        }
+
+
+                                String school = "";
+
+                                String query = "SELECT * FROM open_project_db.users WHERE id = \"" + userid + "\"\n";
+
+                                try(ResultSet rs = conn.prepareStatement(query).executeQuery()) {
+
+                                if (rs.next()) {
+                                    school = rs.getString("university");
+                                }
+
+                                } catch (SQLException e) {
+                                   throw new ServletException("SQL error", e);
+
+                                }
+
+                            %>
+
                             <div class="form-label-group">
-                                <input id="school" name="school" class="form-control" placeholder="College or University"
+                                <input id="professor" name="professor" autocomplete = "off" class="form-control" placeholder="Professor (Last Name Only)"
                                        required>
                             </div>
 
                             <div class="form-label-group">
-                                <input id="professor" name="professor" class="form-control" placeholder="Professor (Last Name Only)"
+                                <input type="number" id="number" name="number" autocomplete="off" class="form-control" placeholder="Ideal Size (minimum 3, maximum 6)" min="3" max="6"
                                        required>
                             </div>
 
-                            <div class="form-label-group">
-                                <input type="number" id="number" name="number" class="form-control" placeholder="Group Size" min="3" max="20"
-                                       required>
-                            </div>
-
-                            <div class="form-label-group">
-                                <input type="number" id="max" name="max" class="form-control" placeholder="Max Size" min="3" max="20"
-                                       required>
-                            </div>
-
-                            <div class="form-label-group">
-                                <input id="subjects" name="subjects" class="form-control" placeholder="Subjects Related"
-                                       required>
-                            </div>
+                            <input type="hidden" id="school" name="school" value="<%=school%>" >
+                            <input type="hidden" id="userid" name="userid" value="<%=userid%>" >
 
                             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Create My Group!</button>
                             <hr class="my-4">

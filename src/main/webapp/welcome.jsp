@@ -30,7 +30,7 @@ limitations under the License.
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Study Group Finder</title>
+    <title> Home | StudyU: Study Group Finder</title>
     <link rel="stylesheet" href="/css/main.css">
 
     <!-- jQuery CDN Link -->
@@ -56,13 +56,13 @@ limitations under the License.
         <!-- Bootstrap nav menu template -->
         <ul class="nav justify-content-end" id="navigation">
             <!-- <li class="nav-item">
-                            <a class="nav-link active" href="/welcome.jsp">Home</a>
+                            <a class="nav-link active" href="/welcome.jsp?userid=<%=userid%>">Home</a>
                         </li>-->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                    aria-expanded="false">Groups</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/create-group.html?userid=<%=userid%>">Create a Group</a>
+                    <a class="dropdown-item" href="/create-group.jsp?userid=<%=userid%>">Create a Group</a>
                     <a class="dropdown-item" href="/groups.jsp?userid=<%=userid%>">Find a Group</a>
                 </div>
             </li>
@@ -106,8 +106,8 @@ limitations under the License.
             }
 
     %>
-
-    <h1 align="center"> Welcome <%=username%>!</h1>
+    <br><br>
+    <h1 align="center"> Welcome, <%=username%>!</h1>
 
     <div class="form-container">
             <h2 class="primary-heading" style="margin-bottom: 0px !important" align="center"> Your Groups </h2>
@@ -132,6 +132,7 @@ limitations under the License.
                           }
 
                 ArrayList<String> thegroups = new ArrayList<String>();
+
 
                           for (Integer x: groupids) {
 
@@ -163,10 +164,10 @@ limitations under the License.
 
                     String link = thegroups.get(i).replaceAll("\\s","");
                 %>
+                   <a href="/grouppage.jsp?group=<%=link%>&id=<%=groupids.get(i)%>&userid=<%=userid%>"> <button type="button" class="btn btn-primary" style="height:200px;width:200px"> <%=thegroups.get(i)%> </button> </a>
 
-                   <a href="/groupchat.html?group=<%=link%>&userid=<%=userid%>"> <button type="button" class="btn btn-primary" style="height:200px;width:200px"> <%=thegroups.get(i)%> </button> </a>
-
-                    &nbsp
+                   <br>
+                   <br>
                 <%
                     }
 

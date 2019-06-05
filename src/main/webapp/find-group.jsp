@@ -21,7 +21,7 @@ limitations under the License.
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Study Group Finder</title>
+    <title> Results | StudyU: Study Group Finder </title>
     <link rel="stylesheet" href="/css/main.css">
 
     <!-- jQuery CDN Link -->
@@ -39,20 +39,22 @@ limitations under the License.
     <script src="/js/navigation-loader.js"></script>
 </head>
 
+<% String userid = (String)request.getAttribute("usersid"); %>
+
 <body onload="addLoginOrLogoutLinkToNavigation();">
     <!-- Navigation menu component -->
     <nav>
         <!-- Bootstrap nav menu template -->
         <ul class="nav justify-content-end" id="navigation">
             <!-- <li class="nav-item">
-                            <a class="nav-link active" href="/welcome.jsp">Home</a>
+                            <a class="nav-link active" href="/welcome.jsp?userid=<%=userid%>">Home</a>
                         </li>-->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                    aria-expanded="false">Groups</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/create-group.html">Create a Group</a>
-                    <a class="dropdown-item" href="/groups.html">Find a Group</a>
+                    <a class="dropdown-item" href="/create-group.jsp?userid=<%=userid%>">Create a Group</a>
+                    <a class="dropdown-item" href="/groups.jsp?userid=<%=userid%>">Find a Group</a>
                 </div>
             </li>
             <li class="nav-item">
@@ -64,13 +66,13 @@ limitations under the License.
     <!-- End of navigation menu component -->
 
     <div class="form-container">
-            <h2 class="primary-heading" style="margin-bottom: 0px !important" align="center"> Your Groups </h2>
+            <h2 class="primary-heading" style="margin-bottom: 0px !important" align="center"> Search Results </h2>
             <div style="height: 2px; background-color: white; width: 15%; margin: 25px auto;"></div>
 
             <form align = center>
                 <%
 
-                String userid = (String)request.getAttribute("usersid");
+
 
                 TreeMap<String, Integer> results = (TreeMap<String, Integer>) request.getAttribute("findresults");
 
@@ -89,8 +91,8 @@ limitations under the License.
                      String link = key.replaceAll("\\s","");
 
                 %>
-                    <a href="/grouppage.jsp?group=<%=link%>&id=<%=id%>&userid=<%=userid%>"> <button type="button" class="btn btn-primary" style="height:200px;width:200px"> <%=key%> <br> </button> </a>
-                    &nbsp
+                    <a href="/grouppage.jsp?group=<%=link%>&id=<%=id%>&userid=<%=userid%>"> <button type="button" class="btn btn-primary" style="height:200px;width:60" align = "center"> <%=key%> <br> </button> </a>
+                    <br><br>
                 <%
                     }
 
