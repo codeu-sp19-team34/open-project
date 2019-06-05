@@ -14,7 +14,7 @@ limitations under the License.
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Study Group Finder</title>
+    <title> Find Group | StudyU: Study Group Finder </title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/css/main.css">
@@ -35,18 +35,23 @@ limitations under the License.
 </head>
 <body onload="buildUI();">
 
+<%
+           String userid = request.getParameter("userid");
+    %>
+
+
 <nav>
     <!-- Bootstrap nav menu template -->
     <ul class="nav justify-content-end" id="navigation">
         <!-- <li class="nav-item">
-                <a class="nav-link active" href="/welcome.jsp">Home</a>
+                <a class="nav-link active" href="/welcome.jsp?userid=<%=userid%>">Home</a>
             </li>-->
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                aria-expanded="false">Groups</a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="/create-group.html">Create a Group</a>
-                <a class="dropdown-item" href="/groups.html">Find a Group</a>
+                <a class="dropdown-item" href="/create-group.jsp?userid=<%=userid%>">Create a Group</a>
+                <a class="dropdown-item" href="/groups.jsp?userid=<%=userid%>">Find a Group</a>
             </div>
         </li>
         <li class="nav-item">
@@ -55,10 +60,6 @@ limitations under the License.
     </ul>
 </nav>
 <!-- End of navigation menu component -->
-
-    <%
-           String userid = request.getParameter("userid");
-    %>
 
 <div class="container">
     <div class="row">

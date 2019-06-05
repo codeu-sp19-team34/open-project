@@ -32,7 +32,7 @@ limitations under the License.
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>CodeU 2019 Starter Project</title>
+    <title> Group Page | StudyU: Study Group Finder </title>
     <link rel="stylesheet" href="/css/main.css">
 
     <!-- jQuery CDN Link -->
@@ -89,6 +89,7 @@ limitations under the License.
 
   .speech-bubble-me p {
       margin: 0 0 10px;
+      text-align:right;
   }
   .speech-bubble-me p:last-of-type {
       margin-bottom: 0;
@@ -119,6 +120,7 @@ limitations under the License.
 
   .speech-bubble-rec p {
       margin: 0 0 10px;
+      text-align:left;
   }
   .speech-bubble-rec p:last-of-type {
       margin-bottom: 0;
@@ -133,28 +135,70 @@ limitations under the License.
       left: 20px;
   }
 
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+  /* Modal Content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+
+  /* The Close Button */
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
     </style>
 </head>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
+<% String userid = request.getParameter("userid"); %>
+
 <body onload="buildUI();">
     <!-- Navigation menu component -->
     <nav>
         <!-- Bootstrap nav menu template -->
         <ul class="nav justify-content-end" id="navigation">
-            <li class="nav-item">
-                <a class="nav-link active" href="#">Home</a>
-            </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                    aria-expanded="false">Groups</a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Create a Group</a>
-                    <a class="dropdown-item" href="#">Find a Group</a>
-                </div>
+               <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true"
+               aria-expanded="false">Groups</a>
+               <div class="dropdown-menu">
+                   <a class="dropdown-item" href="/create-group.jsp?userid=<%=userid%>">Create a Group</a>
+                   <a class="dropdown-item" href="/groups.jsp?userid=<%=userid%>">Find a Group</a>
+               </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/welcome.jsp?userid=<%=userid%>">Home</a>
+            </li>
+
         </ul>
     </nav>
     <!-- End of navigation menu component -->
@@ -163,7 +207,6 @@ limitations under the License.
         Connection conn;
 
         String url = System.getProperty("cloudsql");
-                log("\n \n \n \n group paggggggggeeee ");
                 try {
                     conn = DriverManager.getConnection(url);
                 } catch (SQLException e) {
@@ -182,10 +225,9 @@ limitations under the License.
                 String groupcourse = "";
                 int groupsize = 0;
                 int groupmaxsize = 0;
-                String groupsubjects = "";
                 String groupprofessor = "";
                 String groupschool = "";
-                String userid = request.getParameter("userid");
+                //String userid = request.getParameter("userid");
 
                 request.setAttribute("userid", userid);
 
@@ -196,7 +238,6 @@ limitations under the License.
                         groupcourse = rs.getString("course");
                         groupsize = rs.getInt("size");
                         groupmaxsize = rs.getInt("max_size");
-                        groupsubjects = rs.getString("subjects");
                         groupprofessor = rs.getString("professor");
                         groupschool = rs.getString("school");
                     }
@@ -217,6 +258,8 @@ limitations under the License.
                <h1 align = "center"> <%=groupformalname%></h1>
                <h3 align = "center"> <%=groupsize%> Members </h3>
 
+               <br><br><br><br>
+
                <form class="joining" action="/joingroup" method=post target = "_self">
 
                     <input type="hidden" id="userid" name="userid" value="<%=userid%>" >
@@ -224,7 +267,7 @@ limitations under the License.
                     <input type="hidden" id="group" name="group" value="<%=thegroup%>" >
 
                    <div style="text-align:center">
-                         <button type="button" onclick="sendMessage()" class="btn btn-primary" style="height:100px;width:200px"> Join Group </button>
+                         <button type="submit" class="btn btn-primary" style="height:100px;width:200px"> Join Group </button>
                    </div>
 
                </form>
@@ -238,28 +281,19 @@ limitations under the License.
             <h1 align = "center"> <%=groupformalname%></h1>
             <h3 align = "center"> <%=groupsize%> Members </h3>
 
-            <div class="w3-panel" style = "width:27%;height:90%;float:left;">
+            <form action = "/gotores" method = post target="_self">
+                <input type="hidden" id="userid" name="userid" value="<%=userid%>" >
+                <input type="hidden" id="groupid" name="groupid" value="<%=groupid%>" >
+                <input type="hidden" id="group" name="group" value="<%=thegroup%>" >
+                <div align = "center">
+                    <button type="submit" class="btn btn-primary" style="height:10%;width:200px"> Resources </button>
+                </div>
+            </form>
 
-               <button type="button" class="btn btn-primary" style="height:20%;width:100%;background-color:red;border:none;"> Leave Group </button>
-               <br><br>
-               <button type="button" class="btn btn-primary" style="height:20%;width:100%;"> Group Calendar </button>
-               <br><br>
-               <button type="button" class="btn btn-primary" style="height:20%;width:100%;"> Add a Resource </button>
-               <h2 align = "center"> Resources </h2>
-
-               <div class = "w3-panel" style = "width:100%;height:100%;float:left;overflow-y:scroll;overflow-x:hidden;">
-                    <button type="button" class="btn btn-primary" style="height:40%;width:100%;"> Test1 </button>
-                    <br><br>
-                    <button type="button" class="btn btn-primary" style="height:40%;width:100%;"> Test 2 </button>
-                    <br><br>
-
-               </div>
-
-            </div>
-            <div class="w3-panel" style = "width:73%;float:left">
+            <div class="w3-panel" style = "width:80%;height:80%;">
                <form action = "/sendmsg" method=post target="_self">
 
-                    <div id = "msgbox" class = "w3-panel" style="height:69%;width:69%;overflow-y:scroll;overflow-x:hidden;position:fixed;display:flex;flex-direction:column-reverse;">
+                    <div id = "msgbox" class = "w3-panel" style="text-align:center;height:95%;width:90%;overflow-y:scroll;overflow-x:hidden;position:fixed;display:flex;flex-direction:column-reverse;">
                        <div>
                         <%
 
@@ -279,7 +313,7 @@ limitations under the License.
 
                                     %>
 
-                                         <div class = "speech-bubble-me">
+                                         <div class = "speech-bubble-me" style="text-align:right;">
                                          <%=msg%>
                                          <br>
                                          <p align = "right" style="font-weight:lighter;"> Me </p>
@@ -316,7 +350,7 @@ limitations under the License.
                                           }
 
                                     %>
-                                         <div class = "speech-bubble-rec">
+                                         <div class = "speech-bubble-rec" style="text-align:left;">
                                          <%=msg%>
                                          <br>
                                          <p align = "right" style="font-weight:lighter;"> <%=sendername%> </p>
@@ -345,10 +379,12 @@ limitations under the License.
                         %>
                       </div>
                     </div>
-                    <div class = "panel-footer" style="position:fixed;bottom:0;color:white;width:100%">
-                        <input placeholder="Say something to your group" id="type" name="type" type="text" style="height:100%;width:55%;border:1px solid #F7730E;border-radius: 18px;padding-left:20px;">
-                         &nbsp
-                        <button type="submit" class="btn btn-primary" style="height:3%;width:10%;"> Send </button>
+                    <div style = "text-align:left;">
+                        <div class = "panel-footer" align = "left" style="position:fixed;bottom:0;background-color:white;width:100%;">
+                            <input placeholder="Say something to your group" id="type" name="type" type="text" autocomplete="off" style="height:50px;width:75%;border:1px solid #F7730E;border-radius: 10px;padding-left:20px;float:left;">
+
+                            <button type="submit" class="btn btn-primary" style="height:50px;width:15%;"> Send </button>
+                        </div>
                     </div>
 
                      <input type="hidden" id="userid" name="userid" value="<%=userid%>" >

@@ -16,8 +16,6 @@
 
 package com.google.codeu.servlets;
 
-import com.google.codeu.data.Group;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,12 +23,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.TreeMap;
 
 // [START gae_java8_mysql_app]
-@WebServlet("/joingroup")
-public class JoinGroupServlet extends HttpServlet {
+@WebServlet("/createresource")
+public class CreateNewResourceServlet extends HttpServlet {
 
     Connection conn;
 
@@ -45,11 +41,15 @@ public class JoinGroupServlet extends HttpServlet {
             throw new ServletException("Unable to connect to Cloud SQL", e);
         }
 
-        String userid = request.getParameter("userid");
         String groupid = request.getParameter("id");
-        String group = request.getParameter("group");
+        String userid = request.getParameter("userid");
+        String resourcename = request.getParameter("resname");
+        String resourceurl = request.getParameter("reslink");
+        String group = request.getParameter("thegroup");
+        int idno = getResourceId();
 
-        String query = "INSERT INTO open_project_db.group_users (group_id, user_id) VALUES (\"" + groupid + "\", \"" + userid + "\")\n";
+
+        String query = "INSERT INTO open_project_db.resources (resource_id, groupid, name, url) VALUES (\"" + idno + "\", \"" + groupid + "\", \"" + resourcename + "\", \"" + resourceurl + "\");\n";
 
         PreparedStatement statement;
         try {
@@ -61,12 +61,18 @@ public class JoinGroupServlet extends HttpServlet {
 
         }
 
-        String findsize = " SELECT * FROM open_project_db.groups WHERE id = " + groupid;
-        int size = 0;
-        try(ResultSet rs = conn.prepareStatement(findsize).executeQuery()) {
+        response.sendRedirect("/group_resources.jsp?group="+ group +"&id="+ groupid +"&userid=" + userid);
 
-            while (rs.next()) {
-                size = rs.getInt("size");
+    }
+
+    public int getResourceId() throws ServletException {
+
+        String query = "SELECT * FROM open_project_db.resources";
+        try(ResultSet rs = conn.prepareStatement(query).executeQuery()) {
+
+            if(rs.next()) {
+                rs.last();
+                return rs.getInt("resource_id") + 1;
             }
 
         } catch (SQLException e) {
@@ -74,18 +80,7 @@ public class JoinGroupServlet extends HttpServlet {
 
         }
 
-        String incrementcount = "UPDATE open_project_db.groups SET size = \"" + (size + 1) + "\" WHERE (id = \"" + groupid + "\")\n";
-        try {
-            statement = conn.prepareStatement(incrementcount);
-            statement.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new ServletException("SQL error", e);
-
-        }
-
-
-        response.sendRedirect("/grouppage.jsp?group="+ group +"&id="+ groupid +"&userid=" + userid);
+        return 0;
 
 
     }

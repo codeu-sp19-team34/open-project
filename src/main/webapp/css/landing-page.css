@@ -18,7 +18,7 @@ body {
 }
 
 .hero-left::after {
-    content: "CodeU Team34 App";
+    content: "StudyU: Study Group Finder";
     top: 20px;
     left: 20px;
     position: absolute;
