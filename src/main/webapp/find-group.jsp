@@ -13,8 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.TreeMap"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="javax.servlet.ServletException"%>
+<%@page import="javax.servlet.annotation.WebServlet"%>
+<%@page import="javax.servlet.http.HttpServlet"%>
+<%@page import="javax.servlet.http.HttpServletRequest"%>
+<%@page import="javax.servlet.http.HttpServletResponse"%>
+<%@page import="java.io.IOException"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.SQLException"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,16 +49,43 @@ limitations under the License.
     <script src="/js/navigation-loader.js"></script>
 </head>
 
-<% String userid = (String)request.getAttribute("usersid"); %>
+<% String userid = (String)request.getAttribute("usersid");
+Connection conn;
+
+            String url = System.getProperty("cloudsql");
+                    try {
+                        conn = DriverManager.getConnection(url);
+                    } catch (SQLException e) {
+                        throw new ServletException("Unable to connect to Cloud SQL", e);
+                    }
+     String loggedin = "SELECT * FROM open_project_db.users WHERE id = \"" + userid + "\"\n";
+
+     try (ResultSet rs = conn.prepareStatement(loggedin).executeQuery()){
+            if (rs.next()) {
+              if (rs.getString("loggedin").equals("0")) {
+               %>
+                     <jsp:forward page="/oops"/>
+               <%
+               }
+            }
+
+       } catch (SQLException e) {
+              throw new ServletException("SQL error", e);
+     }
+
+
+
+
+ %>
 
 <body onload="addLoginOrLogoutLinkToNavigation();">
     <!-- Navigation menu component -->
-    <nav>
-        <!-- Bootstrap nav menu template -->
-        <ul class="nav justify-content-end" id="navigation">
-            <!-- <li class="nav-item">
-                            <a class="nav-link active" href="/welcome.jsp?userid=<%=userid%>">Home</a>
-                        </li>-->
+<nav>
+    <!-- Bootstrap nav menu template -->
+    <ul class="nav justify-content-end" id="navigation">
+            <li class="nav-item">
+                <a class="nav-link active" href="/welcome.jsp?userid=<%=userid%>">Home</a>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                    aria-expanded="false">Groups</a>
@@ -58,11 +95,11 @@ limitations under the License.
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="/index.html">Logout</a>
+                 <a class="nav-link active" href="/logout?userid=<%=userid%>">Logout</a>
             </li>
+    </ul>
+</nav>
 
-        </ul>
-    </nav>
     <!-- End of navigation menu component -->
 
     <div class="form-container">
@@ -91,7 +128,7 @@ limitations under the License.
                      String link = key.replaceAll("\\s","");
 
                 %>
-                    <a href="/grouppage.jsp?group=<%=link%>&id=<%=id%>&userid=<%=userid%>"> <button type="button" class="btn btn-primary" style="height:200px;width:60" align = "center"> <%=key%> <br> </button> </a>
+                    <a href="/grouppage.jsp?group=<%=link%>&id=<%=id%>&userid=<%=userid%>"> <button type="button" class="btn btn-primary" style="height:200px;width:200px" align = "center"> <%=key%> <br> </button> </a>
                     <br><br>
                 <%
                     }

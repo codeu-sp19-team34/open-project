@@ -10,7 +10,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-
+<%@page import="java.util.ArrayList"%>
+<%@page import="javax.servlet.ServletException"%>
+<%@page import="javax.servlet.annotation.WebServlet"%>
+<%@page import="javax.servlet.http.HttpServlet"%>
+<%@page import="javax.servlet.http.HttpServletRequest"%>
+<%@page import="javax.servlet.http.HttpServletResponse"%>
+<%@page import="java.io.IOException"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.SQLException"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,9 +46,32 @@ limitations under the License.
 <body onload="buildUI();">
 
 <%
-           String userid = request.getParameter("userid");
-    %>
+            Connection conn;
+            String url = System.getProperty("cloudsql");
 
+                    try {
+                        conn = DriverManager.getConnection(url);
+                    } catch (SQLException e) {
+                        throw new ServletException("Unable to connect to Cloud SQL", e);
+                    }
+           String userid = request.getParameter("userid");
+            String loggedin = "SELECT * FROM open_project_db.users WHERE id = \"" + userid + "\"\n";
+
+                    try (ResultSet rs = conn.prepareStatement(loggedin).executeQuery()){
+                          if (rs.next()){
+                             if (rs.getString("loggedin").equals("0")) {
+                               %>
+                                   <jsp:forward page="/oops"/>
+                               <%
+                              }
+                           }
+
+                    } catch (SQLException e) {
+                        throw new ServletException("SQL error", e);
+                    }
+
+
+      %>
 
 <nav>
     <!-- Bootstrap nav menu template -->
@@ -55,7 +88,7 @@ limitations under the License.
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" href="/index.html">Logout</a>
+             <a class="nav-link active" href="/logout?userid=<%=userid%>">Logout</a>
         </li>
     </ul>
 </nav>
@@ -75,7 +108,7 @@ limitations under the License.
                         </div>
 
                         <div class="form-label-group">
-                            <input id="number" name="number"class="form-control" placeholder="Course Number (example: 10)"
+                            <input type = "number" id="number" min="0" name="number"class="form-control" placeholder="Course Number (example: 10)"
                                    required autofocus>
                         </div>
 

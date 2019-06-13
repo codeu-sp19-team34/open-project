@@ -51,14 +51,12 @@ limitations under the License.
 <body onload="addLoginOrLogoutLinkToNavigation();">
 
     <% String userid = request.getParameter("userid"); %>
-    <!-- Navigation menu component -->
+<!-- Navigation menu component -->
     <nav>
         <!-- Bootstrap nav menu template -->
         <ul class="nav justify-content-end" id="navigation">
-            <!-- <li class="nav-item">
-                            <a class="nav-link active" href="/welcome.jsp?userid=<%=userid%>">Home</a>
-                        </li>-->
-            <li class="nav-item dropdown">
+
+            <li class="nav-item dropdown" style ="width:100px;" align="right">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                    aria-expanded="false">Groups</a>
                 <div class="dropdown-menu">
@@ -66,13 +64,17 @@ limitations under the License.
                     <a class="dropdown-item" href="/groups.jsp?userid=<%=userid%>">Find a Group</a>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="/index.html">Logout</a>
+            <li class="nav-item" style = "width:100px;" align= "right">
+                <a class="nav-link active" href="/user_settings.jsp?userid=<%=userid%>">Settings</a>
+            </li>
+            <li class="nav-item" style="width:100px;" align = "right">
+                <a class="nav-link active" href="/logout?userid=<%=userid%>">Logout</a>
             </li>
 
         </ul>
     </nav>
     <!-- End of navigation menu component -->
+
 
     <%
 
@@ -95,10 +97,16 @@ limitations under the License.
             String findusername = "SELECT * FROM open_project_db.users WHERE id = " + userid;
             String username = "";
             try(ResultSet rs = conn.prepareStatement(findusername).executeQuery()) {
-                while (rs.next()) {
+                if(rs.next()) {
                 log("\n \n \n \n THE SELECT IS WORKING");
                 username = rs.getString("first_name");
-
+                    //check to see if the user is actually logged in
+                    //if theyre not, then take them to the login page
+                   if (rs.getString("loggedin").equals("0")) {
+                    %>
+                        <jsp:forward page="/oops"/>
+                    <%
+                   }
                 }
              } catch (SQLException e) {
                throw new ServletException("SQL error", e);
@@ -132,6 +140,7 @@ limitations under the License.
                           }
 
                 ArrayList<String> thegroups = new ArrayList<String>();
+                ArrayList<String> groupcourses = new ArrayList<String>();
 
 
                           for (Integer x: groupids) {
@@ -141,7 +150,9 @@ limitations under the License.
                             try (ResultSet rs = conn.prepareStatement(query).executeQuery()) {
                               while (rs.next()) {
                                 String name = rs.getString("name");
+                                String clas = rs.getString("course");
                                 thegroups.add(name);
+                                groupcourses.add(clas);
 
                               }
                             } catch (SQLException e) {
@@ -164,7 +175,12 @@ limitations under the License.
 
                     String link = thegroups.get(i).replaceAll("\\s","");
                 %>
-                   <a href="/grouppage.jsp?group=<%=link%>&id=<%=groupids.get(i)%>&userid=<%=userid%>"> <button type="button" class="btn btn-primary" style="height:200px;width:200px"> <%=thegroups.get(i)%> </button> </a>
+                   <a href="/grouppage.jsp?group=<%=link%>&id=<%=groupids.get(i)%>&userid=<%=userid%>">
+                   <button type="button" class="btn btn-primary" style="height:200px;width:200px">
+                        <h3> <%=thegroups.get(i)%> </h3>
+                        <br>
+                        <p> <%=groupcourses.get(i)%> </p>
+                   </button> </a>
 
                    <br>
                    <br>

@@ -101,11 +101,11 @@ limitations under the License.
   .note {
     color: #333;
     position: relative;
-    width: 300px;
-    height: 300px;
+    width: 220px;
+    height: 220px;
     margin: 0 auto;
-    padding: 90px;
-    font-size: 30px;
+    padding: 30px;
+    font-size: 25px;
     text-align:center;
     box-shadow: 0 10px 10px 2px rgba(0,0,0,0.3);
   }
@@ -137,11 +137,28 @@ limitations under the License.
     Connection conn;
 
     String url = System.getProperty("cloudsql");
-                    try {
-                        conn = DriverManager.getConnection(url);
-                    } catch (SQLException e) {
-                        throw new ServletException("Unable to connect to Cloud SQL", e);
-                    }
+    try {
+       conn = DriverManager.getConnection(url);
+    } catch (SQLException e) {
+       throw new ServletException("Unable to connect to Cloud SQL", e);
+    }
+    //check to see if the user is logged in
+
+         String loggedin = "SELECT * FROM open_project_db.users WHERE id = \"" + userid + "\"\n";
+
+         try (ResultSet l = conn.prepareStatement(loggedin).executeQuery()){
+            if (l.next()) {
+              if (l.getString("loggedin").equals("0")) {
+               %>
+                     <jsp:forward page="/oops"/>
+               <%
+               }
+            }
+         } catch (SQLException e) {
+             throw new ServletException("SQL error", e);
+         }
+
+
                     String query = "SELECT * FROM open_project_db.groups WHERE id = \"" + groupid + "\"\n";
 
                     try(ResultSet rs = conn.prepareStatement(query).executeQuery()) {
@@ -173,6 +190,9 @@ limitations under the License.
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="/welcome.jsp?userid=<%=userid%>">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/logout?userid=<%=userid%>">Logout</a>
             </li>
 
         </ul>

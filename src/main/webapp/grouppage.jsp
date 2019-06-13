@@ -65,6 +65,8 @@ limitations under the License.
     </script>
 
     <style>
+
+
     .footer {
       left: 1%;
       bottom: 0;
@@ -74,7 +76,7 @@ limitations under the License.
     }
 
   .speech-bubble-me {
-      background: #efefef;
+      background: #eae672;
       -webkit-border-radius: 4px;
               border-radius: 4px;
       font-size: 1.2rem;
@@ -97,7 +99,7 @@ limitations under the License.
 
   .speech-bubble-me::after {
       border-left: 20px solid transparent;
-      border-top: 20px solid #efefef;
+      border-top: 20px solid #eae672;
       bottom: -20px;
       content: "";
       position: absolute;
@@ -174,13 +176,77 @@ limitations under the License.
   }
 
 
+     @media screen and (max-width: 728px) {
+
+     h2 {
+        font-size:20px;
+     }
+
+   .speech-bubble-me {
+       background: #eae672;;
+       -webkit-border-radius: 4px;
+               border-radius: 4px;
+       font-size: 0.9rem;
+       font-weight:bold;
+       line-height: 1.3;
+       margin: 0 auto 40px;
+       max-width: 400px;
+       padding: 15px;
+       position: relative;
+       float:right;
+   }
+
+
+   .speech-bubble-rec {
+       background: #efefef;
+       -webkit-border-radius: 4px;
+               border-radius: 4px;
+       font-size: 0.9rem;
+       font-weight:bold;
+       line-height: 1.3;
+       margin: 0 auto 40px;
+       max-width: 400px;
+       padding: 15px;
+       position: relative;
+       float:left;
+   }
+
+     }
+
     </style>
 </head>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-<% String userid = request.getParameter("userid"); %>
+<%
+    Connection conn;
+
+            String url = System.getProperty("cloudsql");
+                    try {
+                        conn = DriverManager.getConnection(url);
+                    } catch (SQLException e) {
+                        throw new ServletException("Unable to connect to Cloud SQL", e);
+                    }
+    String userid = request.getParameter("userid");
+     String loggedin = "SELECT * FROM open_project_db.users WHERE id = \"" + userid + "\"\n";
+
+     try (ResultSet rs = conn.prepareStatement(loggedin).executeQuery()){
+        if(rs.next()) {
+          if (rs.getString("loggedin").equals("0")) {
+           %>
+                 <jsp:forward page="/oops"/>
+           <%
+           }
+         }
+
+       } catch (SQLException e) {
+              throw new ServletException("SQL error", e);
+     }
+
+
+
+ %>
 
 <body onload="buildUI();">
     <!-- Navigation menu component -->
@@ -198,20 +264,16 @@ limitations under the License.
             <li class="nav-item">
                 <a class="nav-link active" href="/welcome.jsp?userid=<%=userid%>">Home</a>
             </li>
+            <li class="nav-item">
+               <a class="nav-link active" href="/logout?userid=<%=userid%>">Logout</a>
+            </li>
 
         </ul>
     </nav>
     <!-- End of navigation menu component -->
 
     <%
-        Connection conn;
 
-        String url = System.getProperty("cloudsql");
-                try {
-                    conn = DriverManager.getConnection(url);
-                } catch (SQLException e) {
-                    throw new ServletException("Unable to connect to Cloud SQL", e);
-                }
 
                 String groupid = request.getParameter("id");
                 String thegroup = request.getParameter("group");
@@ -278,22 +340,136 @@ limitations under the License.
           %>
 
           <div class="w3-container">
-            <h1 align = "center"> <%=groupformalname%></h1>
-            <h3 align = "center"> <%=groupsize%> Members </h3>
+            <h2 align = "center"> <%=groupformalname%></h2>
+            <div align = "center">
+                <h3 id = "myBtn" align = "center" style="font-size:16px"> <%=groupsize%> Members </h3>
+            </div>
 
-            <form action = "/gotores" method = post target="_self">
-                <input type="hidden" id="userid" name="userid" value="<%=userid%>" >
-                <input type="hidden" id="groupid" name="groupid" value="<%=groupid%>" >
-                <input type="hidden" id="group" name="group" value="<%=thegroup%>" >
-                <div align = "center">
-                    <button type="submit" class="btn btn-primary" style="height:10%;width:200px"> Resources </button>
-                </div>
-            </form>
+                        <div class="w3-panel" style = "width:100%;height:30%;float:left;order:1;">
 
-            <div class="w3-panel" style = "width:80%;height:80%;">
+                            <!-- The Modal -->
+                            <div id="myModal" class="modal">
+
+                              <!-- Modal content -->
+                              <div class="modal-content">
+                                <span class="close">&times;</span>
+
+                                <h1 align = "center" style="text-style:bold;"> Group Members </h1>
+
+                                <div style="padding-left:40px;">
+                                    <div style="overflow-y:scroll;">
+
+                                        <%
+
+                                                //first find their id numbers, then you can find their name
+                                                ArrayList<Integer> membernumbers = new ArrayList<Integer>();
+
+                                                String findmemberids = "SELECT * FROM open_project_db.group_users WHERE group_id = \"" + groupid + "\"\n";
+
+                                                try (ResultSet findingnumbers = conn.prepareStatement(findmemberids).executeQuery()){
+
+                                                        while(findingnumbers.next()) {
+                                                            membernumbers.add(findingnumbers.getInt("user_id"));
+                                                        }
+
+                                                } catch (SQLException e) {
+                                                    throw new ServletException("SQL error", e);
+                                                }
+
+                                                for (Integer i: membernumbers) {
+
+                                                    String findmembersname = "SELECT * FROM open_project_db.users WHERE id = \"" + Integer.toString(i) + "\"\n";
+                                                    try (ResultSet findingthename = conn.prepareStatement(findmembersname).executeQuery()){
+
+                                                            if(findingthename.next()) {
+
+                                                            %>
+                                                                <h3 align = "left"> <%=findingthename.getString("first_name")%> <%=findingthename.getString("last_name")%> </h3>
+                                                                <br>
+
+                                                            <%
+                                                            }
+
+                                                    }
+                                                    catch (SQLException e) {
+                                                        throw new ServletException("SQL error", e);
+                                                    }
+
+
+
+
+                                                }
+
+
+
+                                        %>
+
+                                  </div>
+
+                             </div>
+
+
+
+                         </div>
+
+            </div>
+
+                            <script>
+                            // Get the modal
+                            var modal = document.getElementById("myModal");
+
+                            // Get the button that opens the modal
+                            var btn = document.getElementById("myBtn");
+
+                            // Get the <span> element that closes the modal
+                            var span = document.getElementsByClassName("close")[0];
+
+                            // When the user clicks the button, open the modal
+                            btn.onclick = function() {
+                              modal.style.display = "block";
+                            }
+
+                            // When the user clicks on <span> (x), close the modal
+                            span.onclick = function() {
+                              modal.style.display = "none";
+                            }
+
+                            // When the user clicks anywhere outside of the modal, close it
+                            window.onclick = function(event) {
+                              if (event.target == modal) {
+                                modal.style.display = "none";
+                              }
+                            }
+                            </script>
+
+            <div align = "center">
+
+                <form action = "/gotores" method = align = "center" post target="_self" style="float:left;">
+                    <input type="hidden" id="userid" name="userid" value="<%=userid%>" >
+                    <input type="hidden" id="groupid" name="groupid" value="<%=groupid%>" >
+                    <input type="hidden" id="group" name="group" value="<%=thegroup%>" >
+                    <div align = "center">
+                        <button type="submit" class="btn btn-primary" style="height:10%;width:130px"> Resources </button>
+                    </div>
+                </form>
+                &nbsp
+                &nbsp
+                            <form action = "/leavegroup" align = "center" method = post target="_self" style="float:left;">
+                                <input type="hidden" id="userid" name="userid" value="<%=userid%>" >
+                                <input type="hidden" id="groupid" name="groupid" value="<%=groupid%>" >
+                                <input type="hidden" id="groupsize" name="groupsize" value="<%=groupsize%>" >
+                                <div align = "center">
+                                    <button type="submit" class="btn btn-primary" style="height:10%;width:130px;background-color:red;"> Leave Group </button>
+                                </div>
+                            </form>
+
+             </div>
+
+
+            <div class="w3-panel" style = "width:50%;height:80%;padding-left:0px;">
                <form action = "/sendmsg" method=post target="_self">
 
-                    <div id = "msgbox" class = "w3-panel" style="text-align:center;height:95%;width:90%;overflow-y:scroll;overflow-x:hidden;position:fixed;display:flex;flex-direction:column-reverse;">
+                    <div id = "msgbox" class = "w3-panel" style="text-align:center;height:50%;width:90%;overflow-y:scroll;overflow-x:hidden;position:fixed;display:flex;flex-direction:column-reverse;">
                        <div>
                         <%
 
@@ -319,11 +495,11 @@ limitations under the License.
                                          <p align = "right" style="font-weight:lighter;"> Me </p>
                                          </div>
                                     <%
-                                        int spaces = (int)(msg.length() / 15);
+                                        int spaces = (int)(msg.length() / 9);
                                          if (spaces <= 4) {
-                                              spaces = 5;
+                                              spaces = 4;
                                          }
-                                        for (int i = 0; i < spaces + 2; i++) {
+                                        for (int i = 0; i < spaces+2; i++) {
                                      %>
                                                 <br>
                                      <%

@@ -52,16 +52,43 @@ limitations under the License.
     <script src="/js/navigation-loader.js"></script>
 </head>
 
-<% String userid = request.getParameter("userid"); %>
+<% String userid = request.getParameter("userid");
+
+Connection conn;
+
+            String url = System.getProperty("cloudsql");
+                    try {
+                        conn = DriverManager.getConnection(url);
+                    } catch (SQLException e) {
+                        throw new ServletException("Unable to connect to Cloud SQL", e);
+                    }
+     String loggedin = "SELECT * FROM open_project_db.users WHERE id = \"" + userid + "\"\n";
+
+     try (ResultSet rs = conn.prepareStatement(loggedin).executeQuery()){
+
+        if (rs.next()) {
+          if (rs.getString("loggedin").equals("0")) {
+           %>
+                 <jsp:forward page="/oops"/>
+           <%
+           }
+          }
+
+       } catch (SQLException e) {
+              throw new ServletException("SQL error", e);
+     }
+
+
+%>
 
 <body onload="addLoginOrLogoutLinkToNavigation();">
     <!-- Navigation menu component -->
     <nav>
         <!-- Bootstrap nav menu template -->
         <ul class="nav justify-content-end" id="navigation">
-           <!-- <li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link active" href="/welcome.jsp?userid=<%=userid%>">Home</a>
-            </li>-->
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                    aria-expanded="false">Groups</a>
@@ -71,11 +98,12 @@ limitations under the License.
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="/index.html">Logout</a>
+                 <a class="nav-link active" href="/logout?userid=<%=userid%>">Logout</a>
             </li>
         </ul>
     </nav>
     <!-- End of navigation menu component -->
+
 
 
     <div class="container">
@@ -92,23 +120,20 @@ limitations under the License.
                             </div>
 
                             <div class="form-label-group">
-                                <input id="course" name="course"class="form-control" placeholder="Course Name" autocomplete = "off"
+                                <input id="subject" name="subject"class="form-control" placeholder="Course Department Abbreviation (example: BIOL)" autocomplete = "off"
                                        required autofocus>
                             </div>
+
+                            <div class="form-label-group">
+                                <input type="number" min="0" id="numberco" name="numberco"class="form-control" placeholder="Course Number (example: 10)" autocomplete = "off"
+                                       required autofocus>
+                            </div>
+
 
                             <!-- university as a hidden parameter-->
 
                             <%
 
-                             Connection conn;
-
-                                String url = System.getProperty("cloudsql");
-                                        log("connecting to: " + url);
-                                        try {
-                                            conn = DriverManager.getConnection(url);
-                                        } catch (SQLException e) {
-                                            throw new ServletException("Unable to connect to Cloud SQL", e);
-                                        }
 
 
                                 String school = "";
