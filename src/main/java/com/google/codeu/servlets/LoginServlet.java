@@ -81,6 +81,17 @@ public class LoginServlet extends HttpServlet {
           dcry = dcry.substring(0, dcry.length() - 7);
         }
         if (dcry.equals(mpassword)) { //user authentication
+          //change the user's status to logged in
+          String loggedin = "UPDATE open_project_db.users SET loggedin = \"" + 1 + "\" WHERE (id = \"" + finder.getInt("id") + "\");\n";
+          PreparedStatement statement = null;
+          try {
+            statement = conn.prepareStatement(loggedin);
+            statement.executeUpdate();
+
+
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
 
           //get the name and save as an attribute
          // String usersname = finder.getString("first_name");

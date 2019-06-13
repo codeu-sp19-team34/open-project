@@ -16,8 +16,6 @@
 
 package com.google.codeu.servlets;
 
-import com.google.codeu.data.Group;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

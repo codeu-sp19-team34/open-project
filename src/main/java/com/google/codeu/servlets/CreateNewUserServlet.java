@@ -77,9 +77,14 @@ public class CreateNewUserServlet extends HttpServlet {
         BigInteger e = p.getExponent();
         BigInteger d = p.getPrivatekey();
         int sa = p.getSalt();
-        String s = "INSERT INTO open_project_db.users VALUES (" + id + ", \"" + mfirst + "\", \"" +
-                mlast + "\", \"" + muni + "\", \"" + memail + "\", \"" + mphone + "\"" +
-                ", \"" + p.performEncryption() + "\", \"" + n + "\", \"" + e + "\", \"" + d + "\", " + sa + ")\n";
+
+        String s = "INSERT INTO open_project_db.users (id, first_name, last_name, university, email, phone_number, password, n, e, d, s, loggedin) VALUES (" +
+                id + ", \"" + mfirst + "\", \"" + mlast + "\", \"" + muni + "\", \"" + memail + "\", \"" +
+                mphone + "\", \"" + p.performEncryption() + "\", \"" + n + "\", \"" + e + "\", \"" + d + "\", " + sa + ", \"" + 1 + "\");\n";
+
+       // String s = "INSERT INTO open_project_db.users VALUES (" + id + ", \"" + mfirst + "\", \"" +
+         //       mlast + "\", \"" + muni + "\", \"" + memail + "\", \"" + mphone + "\"" +
+           //     ", \"" + p.performEncryption() + "\", \"" + n + "\", \"" + e + "\", \"" + d + "\", " + sa + ", \"" + 1 +"\");";
 
         PreparedStatement statement = conn.prepareStatement(s);
         statement.executeUpdate();

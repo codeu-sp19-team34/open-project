@@ -31,7 +31,7 @@ public class GoToResourcesServlet extends HttpServlet {
     Connection conn;
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String groupid = request.getParameter("groupid");
         String userid = request.getParameter("userid");
@@ -39,6 +39,12 @@ public class GoToResourcesServlet extends HttpServlet {
 
         response.sendRedirect("/group_resources.jsp?group="+ group +"&id="+ groupid +"&userid=" + userid);
 
+    }
+
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        doGet(request, response);
     }
 
 }
