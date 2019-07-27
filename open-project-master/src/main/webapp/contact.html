@@ -1,0 +1,976 @@
+
+<!-- Copyright 2019 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>StudyU: Study Group Finder | Brought to you by CodeU Team 34</title>
+    <link rel="stylesheet" href="css/landing-page.css">
+
+    <!-- jQuery CDN Link -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Font Awesome Icons link -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+
+
+    <script src="/js/navigation-loader.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Comfortaa" />
+
+    <style>
+
+            body {
+                font-family: 'Comfortaa', cursive;
+            }
+        </style>
+</head>
+
+<body>
+<main>
+    <div class="hero">
+        <div class="hero-left hero-item">
+            <h2 class="primary-heading" style="color:#eae672;margin-bottom: 0px !important"> Send Us A Message! </h2>
+            <br> <br>
+            <p align = "center" style="color:white;font-size:12px;margin-left:20px;margin-right:20px;"> Don't see your school listed? Have a suggestion for how we can improve? Let us know! </p>
+        </div>
+        <div class="hero-right hero-item">
+            <a href="login.html" class="login">Already a member? Sign in here.</a>
+            <div class="form-container">
+
+                <form id="contact" action="/contactus" method=post target="_self">
+                    <fieldset>
+                        <input placeholder="First Name" id="mfname" name="mfname" type="text" tabindex="1" required autofocus>
+                    </fieldset>
+
+                    <fieldset>
+                        <input placeholder="Last Name" id="mlname" name="mlname" type="text" tabindex="2" required autofocus>
+                    </fieldset>
+
+                    <fieldset>
+                        <input placeholder="Email" id="memail" name="memail" type="email" tabindex="3" required>
+                    </fieldset>
+
+                    <input list = "Universities" placeholder="College or University" id="muni" name="muni" type="text" tabindex="4" required>
+                    <datalist id="Universities">
+                        <option value="A. T. Still University">
+                        <option value="Abilene Christian University">
+                        <option value="Abraham Baldwin Agricultural College">
+                        <option value="Academy of Art University">
+                        <option value="Adams State University">
+
+                        <option value="Adelphi University">
+                        <option value="Adler Graduate School">
+                        <option value="Adler University">
+                        <option value="Adrian College">
+                        <option value="Adventist University of Health Sciences">
+
+                        <option value="Agnes Scott College">
+                        <option value="Air Force Institute of Technology">
+                        <option value="Alabama A&M University">
+                        <option value="Alabama State University">
+                        <option value="Alaska Bible College">
+
+                        <option value="Alaska Pacific University">
+                        <option value="Albany College of Pharmacy and Health Sciences">
+                        <option value="Albany Medical College">
+                        <option value="Albany State University">
+                        <option value="Albertus Magnus College">
+
+                        <option value="Alboin College">
+                        <option value="Albright College">
+                        <option value="Alcorn State University">
+                        <option value="Alderson Broaddus University">
+                        <option value="Alfred State College">
+
+                        <option value="Alfred University">
+                        <option value="Alice Lloyd College">
+                        <option value="Allegheny College">
+                        <option value="Allen College">
+                        <option value="Allen University">
+
+                        <option value="Alliant International University">
+                        <option value="Alma College">
+                        <option value="Alvernia University">
+                        <option value="Alverno College">
+                        <option value="Amberton University">
+
+                        <option value="American Baptist College">
+                        <option value="American Film Institute Conservatory">
+                        <option value="American International College">
+                        <option value="American Jewish University">
+                        <option value="American University">
+
+                        <option value="Amherst College">
+                        <option value="Anderson University">
+                        <option value="Anderson University, Indiana">
+                        <option value="Andrews University">
+                        <option value="Angelo State University">
+
+                        <option value="Anna Maria College">
+                        <option value="Antioch University">
+                        <option value="Antioch University of Los Angeles">
+                        <option value="Antioch University of New England">
+                        <option value="Antioch University of Santa Barbara">
+
+                        <option value="Antioch University Seattle">
+                        <option value="Appalachian Bible College">
+                        <option value="Appalachian College of Pharmacy">
+                        <option value="Appalachian State University">
+                        <option value="Aquinas College">
+
+                        <option value="Aquinas College, Tennessee">
+                        <option value="Arcadia University">
+                        <option value="Argosy University">
+                        <option value="Arizona Christian University">
+                        <option value="Arizona State University">
+
+                        <option value="Arkansas Baptist College">
+                        <option value="Arkansas State University">
+                        <option value="Arkansas Tech University">
+                        <option value="Arlington Baptist University">
+                        <option value="Armstrong State University">
+
+                        <option value="Art Academy of Cincinnati">
+                        <option value="ArtCenter College of Design">
+                        <option value="Asbury University">
+                        <option value="Ashland University">
+                        <option value="Assumption College">
+
+                        <option value="Athens State University">
+                        <option value="Atlanta Metropolitan State College">
+                        <option value="Auburn University">
+                        <option value="Auburn University at Montgomery">
+                        <option value="Augsburg College">
+
+                        <option value="Augusta University">
+                        <option value="Augustana College">
+                        <option value="Augustana University">
+                        <option value="Aurora University">
+                        <option value="Austin College">
+
+                        <option value="Austin Peay State University">
+                        <option value="Ave Maria University">
+                        <option value="Averett University">
+                        <option value="Avila University">
+                        <option value="Azusa Pacific University">
+
+                        <option value="Babson College">
+                        <option value="Bacone College">
+                        <option value="Baker College">
+                        <option value="Baker University">
+                        <option value="Baldwin Wallace University">
+
+                        <option value="Ball State University">
+                        <option value="Bank Street College of Education">
+                        <option value="Baptist Bible College">
+                        <option value="Baptist Memorial College of Health Sciences">
+                        <option value="Baptist University of the Americas">
+
+                        <option value="Barclay College">
+                        <option value="Bard College">
+                        <option value="Bard College at Simon's Rock">
+                        <option value="Barnard College">
+                        <option value="Barnes-Jewish College Goldfarb School of Nursing">
+
+                        <option value="Barry University">
+                        <option value="Barton College">
+                        <option value="Bastyr University">
+                        <option value="Bates College">
+                        <option value="Bay Path University">
+
+                        <option value="Bay State College">
+                        <option value="Baylor College of Medicine">
+                        <option value="Baylor University">
+                        <option value="Beacon College">
+                        <option value="Becker College">
+
+                        <option value="Belhaven University">
+                        <option value="Bellarmine University">
+                        <option value="Bellevue College">
+                        <option value="Bellevue University">
+                        <option value="Bellin College">
+
+                        <option value="Belmont Abbey College">
+                        <option value="Belmont University">
+                        <option value="Beloit College">
+                        <option value="Bemidji State University">
+                        <option value="Benedict College">
+
+                        <option value="Benedictine College">
+                        <option value="Benjamin Franklin Institute of Technology">
+                        <option value="Bennett College">
+                        <option value="Bennington College">
+                        <option value="Bently University">
+
+                        <option value="Berea College">
+                        <option value="Berkeley College">
+                        <option value="Barklee College of Music">
+                        <option value="Bernard M Baruch College, CUNY">
+                        <option value="Berry College">
+
+                        <option value="Bethany College">
+                        <option value="Bethany College, Kansas">
+                        <option value="Bethany Lutheran College">
+                        <option value="Bethel College">
+                        <option value="Bethel College-Indiana">
+
+                        <option value="Bethel University">
+                        <option value="Bethel University, Tennessee">
+                        <option value="Bethesda University">
+                        <option value="Bethune-Cookman University">
+                        <option value="Beulah Heights University">
+
+                        <option value="Binghamton University of New York">
+                        <option value="Biola University">
+                        <option value="Birmingham-Southern College">
+                        <option value="Bismarck State College">
+                        <option value="Black Hills State University">
+
+                        <option value="Blackburn College">
+                        <option value="Blessing-Rieman College of Nursing">
+                        <option value="Bloomfield College">
+                        <option value="Bloomsburg University of Pennsylvania">
+                        <option value="Blue Mountain College">
+
+                        <option value="Bluefield College">
+                        <option value="Bluefield State College">
+                        <option value="Bluffton University">
+                        <option value="Bob Jones University">
+                        <option value="Boise Bible College">
+
+                        <option value="Boise State University">
+                        <option value="Boricua College">
+                        <option value="Bostn Architectural College">
+                        <option value="Boston College">
+                        <option value="Boston Graudate School of Psychoanalysis">
+
+                        <option value="Boston University">
+                        <option value="Bowdoin College">
+                        <option value="Bowie State University">
+                        <option value="Bowling Green State University">
+                        <option value="Bradley University">
+
+                        <option value="Brandeis University">
+                        <option value="Brandman University">
+                        <option value="Brazosport College">
+                        <option value="Brenau University">
+                        <option value="Brescia University">
+
+                        <option value="Brevard College">
+                        <option value="Brewton-Parker College">
+                        <option value="Briar Cliff University">
+                        <option value="Briarcliffe College">
+                        <option value="Bridgewater College">
+
+                        <option value="Bridgewater State University">
+                        <option value="Brigham Young University">
+                        <option value="Brigham Yougg University-Hawaii">
+                        <option value="Brigham Young University-Idaho">
+                        <option value="Brooklyn College">
+
+                        <option value="Brooklyn Law School">
+                        <option value="Broward College">
+                        <option value="Brown Mackie College">
+                        <option value="Brown University">
+                        <option value="Bryan College">
+
+                        <option value="Bryan College of Health Sciences">
+                        <option value="Bryant and Stratton College">
+                        <option value="Bryant University">
+                        <option value="Bryn Athyn College">
+                        <option value="Bryn Mawr College">
+
+                        <option value="Bucknell University">
+                        <option value="Buena Vista University">
+                        <option value="Buffalo State College">
+                        <option value="Butler University">
+                        <option value="Cabarrus College of Health Sciences">
+
+                        <option value="Cabrini University">
+                        <option value="Cairn University">
+                        <option value="Caldwell University">
+                        <option value="California Baptist University">
+                        <option value="California College of the Arts">
+
+                        <option value="California Institute of Integral Studies">
+                        <option value="California Institute of Technology">
+                        <option value="California Institute of the Arts">
+                        <option value="California Lutheran University">
+                        <option value="California Polytechnic State University, San Luis Obispo">
+
+                        <option value="California State Polytechnic University, Ponoma">
+                        <option value="California State University, Channel Islands">
+                        <option value="California State University, Maritime Academy">
+                        <option value="California State University, San Marcos">
+                        <option value="California State University, Stanislaus">
+
+                        <option value="California State University, Bakersfield">
+                        <option value="California State University, Chico">
+                        <option value="California State University, Dominguez Hills">
+                        <option value="California State University, East Bay">
+                        <option value="California State University, Fresno">
+
+                        <option value="California State University, Fullerton">
+                        <option value="California State University, Long Beach">
+                        <option value="California State University, Los Angeles">
+                        <option value="California State University, Monterey Bay">
+                        <option value="California State University, Northridge">
+
+                        <option value="California State University, Sacramento">
+                        <option value="California State University, San Bernadino">
+                        <option value="California University of Pennsylvania">
+                        <option value="California Western School of Law">
+                        <option value="Calumet College of St. Joseph">
+
+                        <option value="Calvary University">
+                        <option value="Calvin College">
+                        <option value="Cambridge College">
+                        <option value="Cameron University">
+                        <option value="Campbell University">
+
+                        <option value="Campbellsville University">
+                        <option value="Canisius College">
+                        <option value="Cañada College">
+                        <option value="Capital University">
+                        <option value="Capitol Technology University">
+
+                        <option value="Cardinal Stritch University">
+                        <option value="Carleton College">
+                        <option value="Carlow University">
+                        <option value="Carnegie Mellon University">
+                        <option value="Carroll College">
+
+                        <option value="Carroll University">
+                        <option value="Carson-Newman University">
+                        <option value="Carthage College">
+                        <option value="Case Western Reserve University">
+                        <option value="Castleton University">
+
+                        <option value="Catawba College">
+                        <option value="Catholic Theological Union">
+                        <option value="Cazenovia College">
+                        <option value="Cedar Crest College">
+                        <option value="Cedarville University">
+
+                        <option value="Centenary College of Louisiana">
+                        <option value="Centenary University">
+                        <option value="Central Baptist College">
+                        <option value="Central Christian College of Kansas">
+                        <option value="Central Christian College of the Bible">
+
+                        <option value="Central College">
+                        <option value="Central Connecticut State University">
+                        <option value="Central Methodist University">
+                        <option value="Central Michigan University">
+                        <option value="Central Penn College">
+
+                        <option value="Central State University">
+                        <option value="Central Washington University">
+                        <option value="Centralia College">
+                        <option value="Centre College">
+                        <option value="Chadron State College">
+
+                        <option value="Chamberlain College of Nursing">
+                        <option value="Chaminade University of Honolulu">
+                        <option value="Champlain College">
+                        <option value="Chapman University">
+                        <option value="Charles R. Drew University of Medicine and Science">
+
+                        <option value="Charleston Southern University">
+                        <option value="Chatham University">
+                        <option value="Chestnut Hill College">
+                        <option value="Cheyney University of Pennsylvania">
+                        <option value="Chicago State University">
+
+                        <option value="Chipola College">
+                        <option value="Chowan University">
+                        <option value="Christian Brothers University">
+                        <option value="Christopher Newport University">
+                        <option value="Cincinnati Christian University">
+
+                        <option value="City University of Seattle">
+                        <option value="Claflin University">
+                        <option value="Claremont Graduate University">
+                        <option value="Claremont McKenna College">
+                        <option value="Clarion University of Pennsylvania">
+
+                        <option value="Clark Atlanta University">
+                        <option value="Clark University">
+                        <option value="Clarke University">
+                        <option value="Clarks Summit University">
+                        <option value="Clarkson College">
+
+                        <option value="Clarkson University">
+                        <option value="Clemson University">
+                        <option value="Cleveland Institute of Art">
+                        <option value="Cleveland Institute of Music">
+                        <option value="Cleveland State University">
+
+                        <option value="Cleveland University-Kansas City">
+                        <option value="Coastal Carolina University">
+                        <option value="Coe College">
+                        <option value="Cogswell Polytechnical College">
+                        <option value="Coker College">
+
+                        <option value="Colby College">
+                        <option value="Colby-Sawyer College">
+                        <option value="Colgate University">
+                        <option value="College for Creative Studies">
+                        <option value="College of Biblical Studies">
+
+                        <option value="College of Central Florida">
+                        <option value="College of Charleston">
+                        <option value="College of Coastal Georgia">
+                        <option value="Cheyney of Mount Saint Vincent">
+                        <option value="College of Our Lady of the Elms">
+
+                        <option value="College of Saint Benedict Saint John's University">
+                        <option value="College of Saint Elizabeth">
+                        <option value="College of Saint Mary">
+                        <option value="College of South Nevada">
+                        <option value="College of St. Joseph">
+
+                        <option value="College of Staten Island">
+                        <option value="College of the Atlantic">
+                        <option value="College of the Holy Cross">
+                        <option value="College of the Ozarks">
+                        <option value="College of William & Mary">
+
+                        <option value="Colorado Christian University">
+                        <option value="Colorado College">
+                        <option value="Colorado Mesa University">
+                        <option value="Colorado School of Mines">
+                        <option value="Colorado State University">
+
+                        <option value="Colorado State University-Pueblo">
+                        <option value="Colorado Technical University">
+                        <option value="Columbia Basin College">
+                        <option value="Columbia College">
+                        <option value="Columbia College Chicago">
+
+                        <option value="Columbia College of Nursing">
+                        <option value="Columbia College, South Carolina">
+                        <option value="Columbia College-Hollywood">
+                        <option value="Columbia International University">
+                        <option value="Columbus College of Art and Design">
+
+                        <option value="Columbus State University">
+                        <option value="Concord University">
+                        <option value="Concordia College">
+                        <option value="Concordia College Alabama">
+                        <option value="Concordia College-New York">
+
+                        <option value="Concordia University Ann Arbor">
+                        <option value="Concordia University Chicago">
+                        <option value="Concordia University Irvine">
+                        <option value="Concordia University Texas">
+                        <option value="Concordia University Wisconsin">
+
+                        <option value="Concordia University Nebraska">
+                        <option value="Concordia University Oregon">
+                        <option value="Concordia University St. Paul">
+                        <option value="Connecticut College">
+                        <option value="Converse College">
+
+                        <option value="Conway School of Landscape Design">
+                        <option value="Coppin State University">
+                        <option value="Corban University">
+                        <option value="Cornell College">
+                        <option value="Cornell University">
+
+                        <option value="Cornerstone University">
+                        <option value="Cornish College of the Arts">
+                        <option value="Cottey College">
+                        <option value="Covenant College">
+                        <option value="Cox College">
+
+                        <option value="Cranbrook Academy of Art">
+                        <option value="Creighton University">
+                        <option value="Chiswell College">
+                        <option value="Crossroads Bible College">
+                        <option value="Crossroads College">
+
+                        <option value="Crowley's Ridge College">
+                        <option value="Crown College">
+                        <option value="Culver-Stockton College">
+                        <option value="Cumberland University">
+                        <option value="College of San Mateo">
+
+                        <option value="Curry College">
+                        <option value="Curtis Institute of Music">
+                        <option value="Daemen College">
+                        <option value="Dakota State University">
+                        <option value="Dakota Wesleyan University">
+
+                        <option value="Dallas Baptist University">
+                        <option value="Dallas Christian College">
+                        <option value="Dalton State College">
+                        <option value="Dartmouth College">
+                        <option value="Davenport University">
+
+                        <option value="Davidson College">
+                        <option value="Davis & Elkins College">
+                        <option value="Davis College">
+                        <option value="Daytona State College">
+                        <option value="Dean College">
+
+                        <option value="Defiance College">
+                        <option value="Deleware State University">
+                        <option value="Deleware Valley University">
+                        <option value="Delta State University">
+                        <option value="Denison University">
+
+                        <option value="Denver College of Nursing">
+                        <option value="DePaul University">
+                        <option value="DePauw University">
+                        <option value="Des Moines University">
+                        <option value="DeSales University">
+
+                        <option value="DeVry University">
+                        <option value="Dickinson College">
+                        <option value="Dickinson State University">
+                        <option value="Dillard University">
+                        <option value="Dixie State University">
+
+                        <option value="Doane University">
+                        <option value="Dominican College">
+                        <option value="Dominican University">
+                        <option value="Dominican University of California">
+                        <option value="Donnelly College">
+
+                        <option value="Dordt College">
+                        <option value="Dowling College">
+                        <option value="Drake University">
+                        <option value="Drew University">
+                        <option value="Drexel University">
+
+                        <option value="Duke University">
+                        <option value="Earlham College">
+                        <option value="East Carolina University">
+                        <option value="East Central University">
+                        <option value="East Georgia State College">
+
+                        <option value="East Tennesse State University">
+                        <option value="East Texas Baptist University">
+                        <option value="Edgewood College">
+                        <option value="Emory University">
+                        <option value="Fairfield University">
+
+                        <option value="Fashion Institute of Technology">
+                        <option value="Fisher College">
+                        <option value="Fisk University">
+                        <option value="Fitchburg State University">
+                        <option value="Florida College">
+
+                        <option value="Florida Gulf Coast University">
+                        <option value="Florida Institute of Technology">
+                        <option value="Florida State University">
+                        <option value="Fordham University">
+                        <option value="Friends University">
+
+                        <option value="Furman University">
+                        <option value="George Mason University">
+                        <option value="George Washington University">
+                        <option value="Georgetown University">
+                        <option value="Georgia Institute of Technology">
+
+                        <option value="Georgia State University">
+                        <option value="Hamilton College">
+                        <option value="Hanover College">
+                        <option value="Harding University">
+                        <option value="Harvard University">
+
+                        <option value="Harvey Mudd College">
+                        <option value="Hillsdale College">
+                        <option value="Holy Names University">
+                        <option value="Hofstra University">
+                        <option value="Howard University">
+
+                        <option value="Humboldt State University">
+                        <option value="Idaho State University">
+                        <option value="Illinois Institute of Technology">
+                        <option value="Illinois State University">
+                        <option value="Indiana State University">
+
+                        <option value="Iowa State University of Science and Technology">
+                        <option value="John Hopkins University">
+                        <option value="Kansas State University">
+                        <option value="Kean University">
+                        <option value="Kennesaw State University">
+
+                        <option value="Kent State University">
+                        <option value="Kentucky State University">
+                        <option value="La Roche College">
+                        <option value="La Sierra University">
+                        <option value="Labouré College">
+
+                        <option value="Lafayette College">
+                        <option value="Lake Forest College">
+                        <option value="Lake Superior State University">
+                        <option value="Lamar University">
+                        <option value="Lewis & Clark College">
+
+                        <option value="Liberty University">
+                        <option value="Long Island University">
+                        <option value="Lousiana State University">
+                        <option value="Louisiana Tech University">
+                        <option value="Loyola Marymount University">
+
+                        <option value="Luther College">
+                        <option value="Macalester College">
+                        <option value="Manhattan College">
+                        <option value="Marist College">
+                        <option value="Marshall University">
+
+                        <option value="Massachusetts Institute of Technology">
+                        <option value="Menlo College">
+                        <option value="Metropolitan College of New York">
+                        <option value="Miami University">
+                        <option value="Middlebury College">
+
+                        <option value="Mills College">
+                        <option value="Minnesota State University Moorhead">
+                        <option value="Minnesota State University Mankato">
+                        <option value="Minot State University">
+                        <option value="Missouri State University">
+
+                        <option value="Missouri University of Science and Technology">
+                        <option value="Montana State University">
+                        <option value="Montana State University Billings">
+                        <option value="Northern Montana State University">
+                        <option value="Montana Tech">
+
+                        <option value="Morehouse College">
+                        <option value="Morgan State University">
+                        <option value="National University">
+                        <option value="Nazareth College">
+                        <option value="New England College">
+
+                        <option value="New England Institute of Technology">
+                        <option value="New Jersey City University">
+                        <option value="New Jersey Institute of Technology">
+                        <option value="New Mexico State University">
+                        <option value="New York Academy of Art">
+
+                        <option value="New York City College of Technology">
+                        <option value="New York Institute of Technology">
+                        <option value="New York University">
+                        <option value="Niagara University">
+                        <option value="North Carolina Central University">
+
+                        <option value="North Carolina State University">
+                        <option value="North Central College">
+                        <option value="North Dakota State University">
+                        <option value="Northeastern Illinois University">
+                        <option value="Northeastern State University">
+
+                        <option value="Northern Kentucky University">
+                        <option value="Northwest Missouri State University">
+                        <option value="Northwestern Oklahoma State University">
+                        <option value="Northwestern State University of Louisiana">
+                        <option value="Northwestern University">
+
+                        <option value="Notre Dame College">
+                        <option value="Notre Dame de Namur University">
+                        <option value="Notre Dame of Maryland University">
+                        <option value="Nova Southeastern University">
+                        <option value="Oakland University">
+
+                        <option value="Ohio University">
+                        <option value="Oklahoma Christian University">
+                        <option value="Oklahoma City University">
+                        <option value="Oklahoma State University">
+                        <option value="Old Dominion University">
+
+                        <option value="Oregon Health & Science University">
+                        <option value="Oregon Institute of Technology">
+                        <option value="Oregon State University">
+                        <option value="Pace University">
+                        <option value="Pacific University">
+
+                        <option value="Palo Alto University">
+                        <option value="Park University">
+                        <option value="Penn State University">
+                        <option value="Pepperdine University">
+                        <option value="Pittsburg State University">
+
+                        <option value="Pitzer College">
+                        <option value="Plymouth State University">
+                        <option value="Ponoma College">
+                        <option value="Portland State University">
+                        <option value="Princeton University">
+
+                        <option value="Purdue University">
+                        <option value="Reed College">
+                        <option value="Reinhardt University">
+                        <option value="Rensselaer Polytechnic Institute">
+                        <option value="Rhode Island College">
+
+                        <option value="Rice University">
+                        <option value="Rider University">
+                        <option value="Rochester Institute of Technology">
+                        <option value="Rutgers State University">
+                        <option value="Sacred Heart University">
+
+                        <option value="Saint Joseph's University">
+                        <option value="Salem State University">
+                        <option value="Sam Houston State University">
+                        <option value="Samford University">
+                        <option value="San Diego State University">
+
+                        <option value="San Francisco Art Institute">
+                        <option value="San Francisco State University">
+                        <option value="San José State University">
+                        <option value="Santa Clara University">
+                        <option value="Savannah State University">
+
+                        <option value="Seton Hall University">
+                        <option value="Siena College">
+                        <option value="Simmons College">
+                        <option value="Smith College">
+                        <option value="Sonoma State University">
+
+                        <option value="South Carolina State University">
+                        <option value="South Dakota State University">
+                        <option value="South Texas College">
+                        <option value="South University">
+                        <option value="St. John's University">
+
+                        <option value="Stanford University">
+                        <option value="Stevens Institute of Technology">
+                        <option value="Suffolk University">
+                        <option value="Sweet Briar College">
+                        <option value="Syracuse University">
+
+                        <option value="Temple University">
+                        <option value="Tennessee State University">
+                        <option value="Tennessee Technological University">
+                        <option value="Texas A&M University">
+                        <option value="Texas College">
+
+                        <option value="Texas State University">
+                        <option value="Texas Tech University">
+                        <option value="The Catholic University of America">
+                        <option value="The University of Alabama">
+                        <option value="The University of Alabama in Huntsville">
+
+                        <option value="The University of Maine">
+                        <option value="The University of Memphis">
+                        <option value="The University of Montana">
+                        <option value="The University of Oklahoma">
+                        <option value="The University of Tampa">
+
+                        <option value="Thee University of Tennessee Knoxville">
+                        <option value="The University of Texas at Arlington">
+                        <option value="The University of Texas at Austin">
+                        <option value="The University of Texas at Dallas">
+                        <option value="The University of Texas at El Paso">
+
+                        <option value="The University of Texas at San Antonio">
+                        <option value="The University of Texas at Tyler">
+                        <option value="The University of Tulsa">
+                        <option value="Thomas Jefferson University">
+                        <option value="Trinity University">
+
+                        <option value="Troy University">
+                        <option value="Tufts University">
+                        <option value="Tulane University">
+                        <option value="United States Air Force Academy">
+                        <option value="University at Albany, State University of New York">
+
+                        <option value="University at Buffalo, State University of New York">
+                        <option value="University of Akron">
+                        <option value="University of Alabama at Birmingham">
+                        <option value="University of Alaska Anchorage">
+                        <option value="University of Alaska Fairbanks">
+
+                        <option value="University of Alaska Southeast">
+                        <option value="University of Arkansas">
+                        <option value="University of Baltimore">
+                        <option value="University of California, Berkeley">
+                        <option value="University of California, Davis">
+
+                        <option value="University of California, Irvine">
+                        <option value="University of California, Los Angeles">
+                        <option value="University of California, Merced">
+                        <option value="University of California, Riverside">
+                        <option value="University of California, San Diego">
+
+                        <option value="University of California, San Francisco">
+                        <option value="University of California, Santa Barbara">
+                        <option value="University of California, Santa Cruz">
+                        <option value="University of Central Arkansas">
+                        <option value="University of Central Florida">
+
+                        <option value="University of Central Missouri">
+                        <option value="University of Central Oklahoma">
+                        <option value="University of Chicago">
+                        <option value="University of Cincinnati">
+                        <option value="University of Colorado Boulder">
+
+                        <option value="University of Colorado Colorado Springs">
+                        <option value="University of Colorado Denver">
+                        <option value="University of Connecticut">
+                        <option value="University of Dallas">
+                        <option value="University of Dayton">
+
+                        <option value="University of Deleware">
+                        <option value="University of Denver">
+                        <option value="University of Florida">
+                        <option value="University of Georgia">
+                        <option value="University of Hawaii at Hilo">
+
+                        <option value="University of Hawaii at Manoa">
+                        <option value="University of Hawaii at West Oahu">
+                        <option value="University of Houston">
+                        <option value="University of Idaho">
+                        <option value="University of Illinois at Chicago">
+
+                        <option value="University of Illinois at Springfield">
+                        <option value="University of Illinois at Urbana-Champagin">
+                        <option value="University of Iowa">
+                        <option value="University of Kansas">
+                        <option value="University of Kentucky">
+
+                        <option value="University of Louisiana at Lafayette">
+                        <option value="University of Louisiana at Monroe">
+                        <option value="University of Louisville">
+                        <option value="University of Maryland">
+                        <option value="University of Maryland Eastern Shore">
+
+                        <option value="University of Maryland Baltimore">
+                        <option value="University of Massachusetts Amherst">
+                        <option value="University of Massachusetts Boston">
+                        <option value="University of Miami">
+                        <option value="University of Michigan">
+
+                        <option value="University of Michigan Dearborn">
+                        <option value="University of Michigan Flint">
+                        <option value="University of Minnesota">
+                        <option value="University of Mississippi">
+                        <option value="University of Missouri">
+
+                        <option value="University of Missouri Kansas City">
+                        <option value="University of Missouri St. Louis">
+                        <option value="University of Mobile">
+                        <option value="University of Nebraska at Omaha">
+                        <option value="University of Nebraska at Lincoln">
+
+                        <option value="University of Nevada Las Vegas">
+                        <option value="University of Nevada Reno">
+                        <option value="University of New Hampshire">
+                        <option value="University of New Mexico">
+                        <option value="University of New Orleans">
+
+                        <option value="University of North Carolina at Asheville">
+                        <option value="University of North Carolina at Chapel Hill">
+                        <option value="University of North Carolina at Charlotte">
+                        <option value="University of North Carolina at Greensboro">
+                        <option value="University of North Carolina at Pembroke">
+
+                        <option value="University of Notre Dame">
+                        <option value="University of Oregon">
+                        <option value="University of Pennsylvania">
+                        <option value="University of Pittsburg">
+                        <option value="University of Portland">
+
+                        <option value="University of Puget Sound">
+                        <option value="University of Rhode Island">
+                        <option value="University of Richmond">
+                        <option value="University of Rochester">
+                        <option value="University of San Diego">
+
+                        <option value="University of San Francisco">
+                        <option value="University of South Carolina">
+                        <option value="University of South Carolina Aiken">
+                        <option value="University of South Carolina Beaufort">
+                        <option value="University of South Carolina Upstate">
+
+                        <option value="University of South Dakota">
+                        <option value="University of the Pacific">
+                        <option value="University of the Potomac">
+                        <option value="University of Toledo">
+                        <option value="University of Vermont">
+
+                        <option value="University of Virginia">
+                        <option value="University of Washington">
+                        <option value="University of Wisconsin Eau Claire">
+                        <option value="University of Wisconsin Green Bay">
+                        <option value="University of Wisconsin La Crosse">
+
+                        <option value="University of Wisconsin Madison">
+                        <option value="University of Wisconsin Milwaukee">
+                        <option value="University of Wisconsin Oshkosh">
+                        <option value="University of Wisconsin Parkside">
+                        <option value="University of Wisconsin Platteville">
+
+                        <option value="University of Wisconsin River Falls">
+                        <option value="University of Wisconsin Stevens Point">
+                        <option value="University of Wisconsin Stout">
+                        <option value="University of Wisconsin Superior">
+                        <option value="University of Wisconsin Whitewater">
+
+                        <option value="University of Wyoming">
+                        <option value="Utah State University">
+                        <option value="Utica College">
+                        <option value="Vanderbilt University">
+                        <option value="Vassar College">
+
+                        <option value="Villanova University">
+                        <option value="Washington State University">
+                        <option value="Weber State University">
+                        <option value="Wells College">
+                        <option value="West Virginia University">
+
+                        <option value="Western Washington University">
+                        <option value="Yale University">
+
+                    </datalist>
+
+                    </fieldset>
+                    <br><br>
+                    <fieldset>
+                        <textarea placeholder="Type your message" id="mmessage" name="mmessage" tabindex="5" style="height:150px;font-family: 'Raleway', sans-serif;" required></textarea>
+                    </fieldset>
+
+                    <fieldset>
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" style="color:#eae672;" type="submit">Send</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="home-footer">
+        <a href="/index.html">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/use_cases.html">Use Cases</a>
+        <a href="/contact.html">Contact</a>
+    </div>
+</footer>
+<div class="copyright">
+    CodeU Team34 | Copyright &copy; 2019 | All Rights Reserved
+</div>
+
+</body>
+
+</html>
